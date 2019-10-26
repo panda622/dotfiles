@@ -1,0 +1,5 @@
+terraform.tfstate*
+workstation/terraform.tfstate*
+workstation/.terraform.*
+workstation/.terraform/*
+workstation/secret.auto.tfvars
