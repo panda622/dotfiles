@@ -2,7 +2,6 @@
 call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
-
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-repeat'
@@ -34,10 +33,13 @@ let mapleader = " "
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>e :Explore<CR>
 nnoremap <Leader>n :nohlsearch<CR>
+nnoremap <Tab> :b#<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
+nnoremap l <NOP>
+nnoremap h <NOP>
 
 " Custom Funcion Vim
 " 1. Auto create dir when save new file
@@ -107,3 +109,7 @@ autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.gra
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
+
+" Ag searcher
+nnoremap \ :Ag 
+nnoremap \| :Ag <C-R><C-W><CR>
