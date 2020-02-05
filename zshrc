@@ -3,6 +3,7 @@
 # ===================
 export VISUAL=nvim
 export LC_ALL="en_US.UTF-8"
+export TERM="xterm-256color"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fpath+=("$HOME/.zsh/pure")
@@ -63,7 +64,7 @@ alias rgcc="rails g controller"
 alias rgmm="rails g model"
 
 alias portlisten="sudo lsof -i -P -n | grep LISTEN"
-alias myip="ifconfig | grep -i inet"
+alias myip="ifconfig | grep -w inet"
 
 # ===================
 #    HISTORY
@@ -89,4 +90,4 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 bindkey '^P' up-history
 bindkey '^N' down-history
 
-bindkey '^ ' autosuggest-accept
+bindkey '^E' autosuggest-accept

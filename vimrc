@@ -6,33 +6,40 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-fugitive'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'ryanoasis/vim-devicons'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   Plug 'dense-analysis/ale'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-  Plug 'rking/ag.vim' 
+  Plug 'rking/ag.vim'
   Plug 'itchyny/lightline.vim'
   Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Basic
 filetype plugin indent on
-set noswapfile
 syntax on
+set encoding=utf-8
+set noswapfile
 set hidden number
 set scrolloff=5
 set tabstop=2 shiftwidth=2 expandtab ai
 set ignorecase incsearch hlsearch
-set background=dark
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set updatetime=300
+set termguicolors
+set background=light
 colorscheme gruvbox
-
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>e :Explore<CR>
 nnoremap <Leader>n :nohlsearch<CR>
+nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
 nnoremap n nzz
 nnoremap N Nzz
@@ -42,24 +49,24 @@ nnoremap l <NOP>
 nnoremap h <NOP>
 
 " Custom Funcion Vim
-" 1. Auto create dir when save new file
-  function s:MkNonExDir(file, buf)
-    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-      let dir=fnamemodify(a:file, ':h')
-      if !isdirectory(dir)
-        call mkdir(dir, 'p')
+  " 1. Auto create dir when save new file
+    function s:MkNonExDir(file, buf)
+      if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+          call mkdir(dir, 'p')
+        endif
       endif
-    endif
-  endfunction
-  augroup BWCCreateDir
-    autocmd!
-    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-  augroup END
+    endfunction
+    augroup BWCCreateDir
+      autocmd!
+      autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+    augroup END
 
-" 2. Jump to last position
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+  " 2. Jump to last position
+  if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  endif
 
 " Plugin Config
 nnoremap <C-n> :NERDTreeToggle<CR>
@@ -69,13 +76,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
 
@@ -111,5 +118,5 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 " Ag searcher
-nnoremap \ :Ag 
-nnoremap \| :Ag <C-R><C-W><CR>
+nnoremap \ :Ag
+nnoremap \| :Ag <C-R><C-W>
