@@ -9,7 +9,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'ryanoasis/vim-devicons'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -18,13 +17,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'rking/ag.vim'
   Plug 'itchyny/lightline.vim'
   Plug 'morhetz/gruvbox'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'robertmeta/nofrils'
 call plug#end()
 
 " Basic
 filetype plugin indent on
 syntax on
 set encoding=utf-8
+set undofile
 set noswapfile
+set dictionary=/usr/share/dict/words
 set hidden number
 set scrolloff=5
 set tabstop=2 shiftwidth=2 expandtab ai
@@ -32,8 +35,8 @@ set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set termguicolors
-set background=light
-colorscheme gruvbox
+set background=dark
+colorscheme nofrils-dark
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
@@ -48,27 +51,30 @@ nnoremap # #zz
 nnoremap l <NOP>
 nnoremap h <NOP>
 
+let g:neoterm_default_mod = 'botright'
+let g:neoterm_autojump = 1
 " Custom Funcion Vim
-  " 1. Auto create dir when save new file
-    function s:MkNonExDir(file, buf)
-      if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-        let dir=fnamemodify(a:file, ':h')
-        if !isdirectory(dir)
-          call mkdir(dir, 'p')
-        endif
+" 1. Auto create dir when save new file
+  function s:MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+      let dir=fnamemodify(a:file, ':h')
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
       endif
-    endfunction
-    augroup BWCCreateDir
-      autocmd!
-      autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-    augroup END
+    endif
+  endfunction
+  augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+  augroup END
 
-  " 2. Jump to last position
-  if has("autocmd")
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-  endif
+" 2. Jump to last position
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
 
 " Plugin Config
+" NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-e> :NERDTreeFind<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -89,6 +95,9 @@ let g:lightline = {
 " FZF
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
+nnoremap / :BLines<CR>
+imap <c-x><c-w> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
 
 " Ale
 let g:ale_set_highlights = 0
