@@ -25,6 +25,8 @@ call plug#end()
 filetype plugin indent on
 syntax on
 set encoding=utf-8
+set undolevels=5000
+set undodir=$HOME/.VIM_UNDO_FILES
 set undofile
 set noswapfile
 set dictionary=/usr/share/dict/words
