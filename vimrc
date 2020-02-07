@@ -36,7 +36,8 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set termguicolors
 set background=dark
-colorscheme nofrils-dark
+set nowrap
+colorscheme nofrils-acme
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
@@ -82,7 +83,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
