@@ -30,7 +30,7 @@ set undodir=$HOME/.VIM_UNDO_FILES
 set undofile
 set noswapfile
 set dictionary=/usr/share/dict/words
-set hidden number
+set hidden
 set scrolloff=5
 set tabstop=2 shiftwidth=2 expandtab ai
 set ignorecase incsearch hlsearch
@@ -38,13 +38,12 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set termguicolors
 set background=dark
-set nowrap
-colorscheme nofrils-acme
+colorscheme gruvbox
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>e :Explore<CR>
-nnoremap <Leader>n :nohlsearch<CR>
+nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
 nnoremap n nzz
@@ -98,7 +97,7 @@ let g:lightline = {
 " FZF
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
-nnoremap / :BLines<CR>
+nnoremap <Leader><Space> :BLines<CR>
 imap <c-x><c-w> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
@@ -123,12 +122,12 @@ let g:prettier#config#parser = 'babylon'
 let g:prettier#config#config_precedence = 'prefer-file'
 let g:prettier#config#prose_wrap = 'preserve'
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 " Ag searcher
-nnoremap \ :Ag
+nnoremap \ :Ag 
 nnoremap \| :Ag <C-R><C-W>
