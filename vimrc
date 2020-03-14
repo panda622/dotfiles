@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   " Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
@@ -22,7 +22,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'jaredgorski/SpaceCamp'
   Plug ' NLKNguyen/papercolor-theme'
   Plug 'majutsushi/tagbar'
-  " Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 " Basic
@@ -54,7 +53,9 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
-autocmd BufRead,BufNewFile *.ts setlocal shiftwidth=2 softtabstop=2 noexpandtab
+nnoremap L $
+nnoremap H ^
+autocmd BufRead,BufNewFile *.ts setlocal shiftwidth=4 softtabstop=4 expandtab
 
 let g:neoterm_default_mod = 'botright'
 let g:neoterm_autojump = 1
@@ -80,6 +81,7 @@ endif
 
 " Plugin Config
 " NERDTree
+let g:NERDTreeWinSize=50
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-e> :NERDTreeFind<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -113,19 +115,19 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 " \}
 
 " Prettier
-" let g:prettier#exec_cmd_async = 1
-" let g:prettier#config#print_width = 80
-" let g:prettier#config#tab_width = 2
-" let g:prettier#config#use_tabs = 'true'
-" let g:prettier#config#semi = 'true'
-" let g:prettier#config#single_quote = 'false'
-" let g:prettier#config#bracket_spacing = 'true'
-" let g:prettier#config#jsx_bracket_same_line = 'false'
-" let g:prettier#config#trailing_comma = 'none'
-" let g:prettier#config#parser = 'babylon'
-" let g:prettier#config#config_precedence = 'prefer-file'
-" let g:prettier#config#prose_wrap = 'preserve'
-" let g:prettier#autoformat = 0
+let g:prettier#exec_cmd_async = 1
+let g:prettier#config#print_width = 80
+let g:prettier#config#tab_width = 4
+let g:prettier#config#use_tabs = 'true'
+let g:prettier#config#semi = 'true'
+let g:prettier#config#single_quote = 'false'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#trailing_comma = 'none'
+let g:prettier#config#parser = 'babylon'
+let g:prettier#config#config_precedence = 'prefer-file'
+let g:prettier#config#prose_wrap = 'preserve'
+let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 " autocmd BufWritePre *.jsx,*.ts,*.tsx PrettierAsync
 
@@ -141,10 +143,3 @@ nnoremap \| :Ag <C-R><C-W>
 nmap <C-t> :TagbarToggle<CR>
 
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-
-" Coc Vim
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
