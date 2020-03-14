@@ -65,6 +65,7 @@ alias rgmm="rails g model"
 
 alias portlisten="sudo lsof -i -P -n | grep LISTEN"
 alias myip="ifconfig | grep -w inet"
+alias wm="vim ~/dotfiles/i3.conf"
 
 # ===================
 #    HISTORY
@@ -91,3 +92,7 @@ bindkey '^P' up-history
 bindkey '^N' down-history
 
 bindkey '^E' autosuggest-accept
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
