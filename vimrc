@@ -1,4 +1,3 @@
-" Plugin
 call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
@@ -9,7 +8,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-  " Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -39,10 +37,11 @@ set scrolloff=5
 set tabstop=2 shiftwidth=2 noexpandtab ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-set tags=.vscode
+set tags=.vscode/tags
 set updatetime=300
+set clipboard+=unnamedplus
 set background=dark
-colorscheme gruvbox
+colorscheme nofrils-dark
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
@@ -50,6 +49,8 @@ nnoremap <Leader>e :Explore<CR>
 nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
+nnoremap <Leader>c :e %:h
+nnoremap <Leader>f :PrettierAsync<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
@@ -142,5 +143,27 @@ nnoremap \| :Ag <C-R><C-W>
 
 " Tagbar
 nmap <C-t> :TagbarToggle<CR>
+" For typescript
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
 
+" Cocvim
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
