@@ -39,6 +39,7 @@ set scrolloff=5
 set tabstop=2 shiftwidth=2 noexpandtab ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set tags=.vscode
 set updatetime=300
 set background=dark
 colorscheme gruvbox
