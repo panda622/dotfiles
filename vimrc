@@ -11,15 +11,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-  Plug 'rking/ag.vim'
-  Plug 'itchyny/lightline.vim'
+  Plug 'majutsushi/tagbar'
+  Plug 'ludovicchabant/vim-gutentags'
+
+  " Colors stuff
   Plug 'ryanoasis/vim-devicons'
   Plug 'sheerun/vim-polyglot'
-  Plug 'robertmeta/nofrils'
-  Plug 'morhetz/gruvbox'
-  Plug 'jaredgorski/SpaceCamp'
-  Plug ' NLKNguyen/papercolor-theme'
-  Plug 'majutsushi/tagbar'
+  Plug 'Yggdroot/indentLine'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 " Basic
@@ -34,14 +35,15 @@ set dictionary=/usr/share/dict/words
 set number
 set hidden
 set scrolloff=5
-set tabstop=2 shiftwidth=2 noexpandtab ai
+set tabstop=4 shiftwidth=4 noexpandtab ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-set tags=.vscode/tags
 set updatetime=300
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 set background=dark
-colorscheme nofrils-dark
+colorscheme ayu
+set mouse=a
+
 " Maping
 let mapleader = " "
 nnoremap <Leader>d :bd<CR>
@@ -49,7 +51,8 @@ nnoremap <Leader>e :Explore<CR>
 nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
-nnoremap <Leader>c :e %:h
+nnoremap <Leader>c :e <C-R>=expand('%:p:h')<CR>/
+nnoremap <Leader>r :!mv <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>f :PrettierAsync<CR>
 nnoremap n nzz
 nnoremap N Nzz
@@ -57,10 +60,8 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap L $
 nnoremap H ^
-autocmd BufRead,BufNewFile *.ts setlocal shiftwidth=4 softtabstop=4 expandtab
+nnoremap Y y$
 
-let g:neoterm_default_mod = 'botright'
-let g:neoterm_autojump = 1
 " Custom Funcion Vim
 " 1. Auto create dir when save new file
   function s:MkNonExDir(file, buf)
@@ -89,60 +90,25 @@ nnoremap <C-e> :NERDTreeFind<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
-
 " FZF
 nnoremap <Leader>p :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<CR>
 nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>g :GFiles?<CR>
+nnoremap <Leader>h :History<CR>
 nnoremap <Leader><Space> :BLines<CR>
 imap <c-x><c-w> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
-
-" Ale
-" let g:ale_set_highlights = 0
-" let g:ale_linters = {
-" \   'javascript': ['eslint'],
-" \   'typescript': ['tslint'],
-" \   'ruby': [],
-" \}
-
-" Prettier
-let g:prettier#exec_cmd_async = 1
-let g:prettier#config#print_width = 80
-let g:prettier#config#tab_width = 4
-let g:prettier#config#use_tabs = 'true'
-let g:prettier#config#semi = 'true'
-let g:prettier#config#single_quote = 'false'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
-let g:prettier#config#trailing_comma = 'none'
-let g:prettier#config#parser = 'babylon'
-let g:prettier#config#config_precedence = 'prefer-file'
-let g:prettier#config#prose_wrap = 'preserve'
-let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
-" autocmd BufWritePre *.jsx,*.ts,*.tsx PrettierAsync
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 " Ag searcher
-nnoremap \ :Ag 
-nnoremap \| :Ag <C-R><C-W>
+nnoremap \ :Ag<CR>
+nnoremap \| :Ag <C-R><C-W><CR>
 
 " Tagbar
 nmap <C-t> :TagbarToggle<CR>
+
 " For typescript
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
@@ -157,9 +123,7 @@ let g:tagbar_type_typescript = {
     \ 'e:enums',
   \ ]
 \ }
-
 " Cocvim
-command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -167,3 +131,16 @@ nmap <silent> gr <Plug>(coc-references)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nmap <silent> <Leader>z :CocFix<CR>
+
+" Gutentags
+let g:gutentags_cache_dir = "~/.ctags_cache_dir"
+
+if has("gui_running")
+	set guifont=Menlo:h14
+end
+
+" Vim airline
+let g:airline_theme='ayu_dark'
+let g:airline#extensions#tabline#enabled = 1

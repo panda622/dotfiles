@@ -7,11 +7,12 @@ export NVM_DIR="$HOME/.nvm"
 
 # Theme
 ZSH_THEME="simple"
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # Alias
 alias ..="cd .."
+alias gt="ctags -f .vscode/tags -R ."
 alias wm="vim ~/dotfiles/i3.conf"
 alias ws='cd ~/dotfiles'
 alias co='cd ~/code'
