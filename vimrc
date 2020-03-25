@@ -40,7 +40,10 @@ set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set clipboard=unnamedplus
+set autoread | au CursorHold * checktime | call feedkeys("lh")
+set termguicolors
 set background=dark
+let ayucolor="mirage"
 colorscheme ayu
 set mouse=a
 
