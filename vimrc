@@ -41,7 +41,7 @@ set updatetime=300
 set clipboard=unnamedplus
 set termguicolors
 set background=dark
-colorscheme gruvbox
+colorscheme default
 set mouse=a
 
 " Maping
@@ -63,6 +63,7 @@ nnoremap # #zz
 nnoremap L $
 nnoremap H ^
 nnoremap Y y$
+nnoremap Q <NOP> 
 
 " Custom Funcion Vim
 " 1. Auto create dir when save new file

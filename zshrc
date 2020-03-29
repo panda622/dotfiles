@@ -8,8 +8,13 @@ export NVM_DIR="$HOME/.nvm"
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-completions/zsh-completions.plugin.zsh
 
-# Theme
+# Setting
+HISTFILE=~/.zhistory
+SAVEHIST=10000
+
+# PS1
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # Alias
@@ -34,3 +39,5 @@ alias tmd="tmux kill-server"
 alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
+
+alias ll='ls -l --color=auto'
