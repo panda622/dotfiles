@@ -52,8 +52,10 @@ nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
 nnoremap <Leader>c :e <C-R>=expand('%:p:h')<CR>/
+nnoremap <Leader>y :!cp % <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>r :!mv <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>f :PrettierAsync<CR>
+nnoremap <Leader>s :%s/<C-R><C-W>/
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
