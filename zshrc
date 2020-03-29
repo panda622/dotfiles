@@ -41,3 +41,5 @@ alias di="docker images"
 alias dc="docker-compose"
 
 alias ll='ls -l --color=auto'
+
+alias myip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk "{print $2}"'
