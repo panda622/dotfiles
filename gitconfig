@@ -3,3 +3,10 @@
 [user]
   name = baodang
   email = baodq96@gmail.com
+[alias]
+	aa = add .
+	co = checkout
+	cb = checkout -b
+	b = branch
+	cmsg = commit -m
+	st = status

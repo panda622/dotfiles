@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'SirVer/ultisnips'
+  " Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
@@ -18,9 +18,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'ryanoasis/vim-devicons'
   Plug 'sheerun/vim-polyglot'
   Plug 'Yggdroot/indentLine'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
   Plug 'ayu-theme/ayu-vim'
+  Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Basic
@@ -34,17 +33,15 @@ set noswapfile
 set dictionary=/usr/share/dict/words
 set number
 set hidden
-set scrolloff=5
+set scrolloff=5 ls=0
 set tabstop=4 shiftwidth=4 noexpandtab ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set clipboard=unnamedplus
-set autoread | au CursorHold * checktime | call feedkeys("lh")
 set termguicolors
 set background=dark
-let ayucolor="mirage"
-colorscheme ayu
+colorscheme gruvbox
 set mouse=a
 
 " Maping

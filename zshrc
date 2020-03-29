@@ -5,10 +5,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Plugins
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # Theme
-ZSH_THEME="simple"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # Alias
 alias ..="cd .."
@@ -17,6 +19,7 @@ alias wm="vim ~/dotfiles/i3.conf"
 alias ws='cd ~/dotfiles'
 alias co='cd ~/code'
 alias v='nvim'
+alias sv='sudo nvim'
 alias vim='nvim'
 alias vimrc='nvim ~/dotfiles/vimrc'
 alias zshrc='nvim ~/dotfiles/zshrc'
