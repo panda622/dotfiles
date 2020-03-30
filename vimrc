@@ -33,7 +33,7 @@ set noswapfile
 set dictionary=/usr/share/dict/words
 set number
 set hidden
-set scrolloff=5 ls=0
+set scrolloff=5 ls=2
 set tabstop=4 shiftwidth=4 noexpandtab ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
@@ -41,7 +41,7 @@ set updatetime=300
 set clipboard=unnamedplus
 set termguicolors
 set background=dark
-colorscheme default
+colorscheme gruvbox
 set mouse=a
 
 " Maping

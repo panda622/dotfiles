@@ -1,9 +1,8 @@
 # Export
-export ZSH="${HOME}/.oh-my-zsh"
+export ZSH="${HOME}/.zsh"
 export EDITOR="nvim"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -15,7 +14,8 @@ HISTFILE=~/.zhistory
 SAVEHIST=10000
 
 # PS1
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+# autoload -U colors && colors
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # Alias
 alias ..="cd .."
@@ -40,6 +40,59 @@ alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
 
-alias ll='ls -l --color=auto'
+case `uname` in
+  Darwin)
+    alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed'
+    alias ls='ls -GpF' # Mac OSX specific
+    alias ll='ls -alGpF' # Mac OSX specific
+  ;;
+  Linux)
+    alias ll='ls -al'
+    alias ls='ls --color=auto' 
+  ;;
+esac
+alias plisten="sudo lsof -i -P -n | grep LISTEN"
 
-alias myip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk "{print $2}"'
+
+
+# =============
+#    PROMPT
+# =============
+autoload -U colors && colors
+setopt promptsubst
+
+local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[green]%}$)"
+PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+
+# Outputs current branch info in prompt format
+function git_prompt_info() {
+  local ref
+  if [[ "$(command git config --get customzsh.hide-status 2>/dev/null)" != "1" ]]; then
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  fi
+}
+
+# Checks if working tree is dirty
+function parse_git_dirty() {
+  local STATUS=''
+  local FLAGS
+  FLAGS=('--porcelain')
+
+  if [[ "$(command git config --get customzsh.hide-dirty)" != "1" ]]; then
+    FLAGS+='--ignore-submodules=dirty'
+    STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
+  fi
+
+  if [[ -n $STATUS ]]; then
+    echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
+  else
+    echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
+  fi
+}
