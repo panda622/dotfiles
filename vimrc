@@ -13,12 +13,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'honza/vim-snippets'
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
+  Plug 'mcchrish/nnn.vim'
 
   " Colors stuff
   Plug 'ryanoasis/vim-devicons'
   Plug 'sheerun/vim-polyglot'
   Plug 'Yggdroot/indentLine'
-  Plug 'ayu-theme/ayu-vim'
   Plug 'morhetz/gruvbox'
 call plug#end()
 
@@ -55,7 +55,7 @@ nnoremap <Leader>c :e <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>y :!cp % <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>r :!mv <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>f :PrettierAsync<CR>
-nnoremap <Leader>s :%s/<C-R><C-W>/
+nnoremap <Leader>s *:%s/<C-R><C-W>/
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
@@ -63,7 +63,7 @@ nnoremap # #zz
 nnoremap L $
 nnoremap H ^
 nnoremap Y y$
-nnoremap Q <NOP> 
+nnoremap Q <NOP>
 
 " Custom Funcion Vim
 " 1. Auto create dir when save new file
@@ -137,3 +137,7 @@ nmap <silent> <Leader>z :CocFix<CR>
 
 " Gutentags
 let g:gutentags_cache_dir = "~/.ctags_cache_dir"
+
+" NNN
+let g:nnn#set_default_mappings = 0
+nnoremap <leader>e :NnnPicker '%:p:h'<CR>
