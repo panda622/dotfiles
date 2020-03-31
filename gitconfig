@@ -10,3 +10,4 @@
 	b = branch
 	cmsg = commit -m
 	st = status
+    po = "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""

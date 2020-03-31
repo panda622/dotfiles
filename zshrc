@@ -53,6 +53,13 @@ alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
 
+alias gst="git status"
+alias gaa="git add ."
+alias gcmsg="git commit -m $1"
+alias ggpush="git po"
+alias ggpull="git pull origin master"
+alias gc!="git commit --amend --no-edit"
+
 case `uname` in
   Darwin)
     alias ls='ls -GpF' # Mac OSX specific

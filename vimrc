@@ -140,4 +140,5 @@ let g:gutentags_cache_dir = "~/.ctags_cache_dir"
 
 " NNN
 let g:nnn#set_default_mappings = 0
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 nnoremap <leader>e :NnnPicker '%:p:h'<CR>
