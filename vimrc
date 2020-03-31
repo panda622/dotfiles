@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Plug 'SirVer/ultisnips'
+  Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
@@ -128,8 +128,6 @@ let g:tagbar_type_typescript = {
 \ }
 " Cocvim
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -139,11 +137,3 @@ nmap <silent> <Leader>z :CocFix<CR>
 
 " Gutentags
 let g:gutentags_cache_dir = "~/.ctags_cache_dir"
-
-if has("gui_running")
-	set guifont=Menlo:h14
-end
-
-" Vim airline
-let g:airline_theme='ayu_dark'
-let g:airline#extensions#tabline#enabled = 1
