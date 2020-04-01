@@ -86,6 +86,7 @@ alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
 
+alias glg="git log --oneline"
 alias gst="git status"
 alias gaa="git add ."
 alias gcmsg="git commit -m $1"
