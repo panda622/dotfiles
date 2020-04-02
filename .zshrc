@@ -43,7 +43,7 @@ preexec() { echo -ne '\e[5 q' ;}
 
 
 # Setting
-HISTFILE=~/.zhistory
+HISTFILE=~/.zsh_history
 SAVEHIST=1000000
 SAVEHIST=1000000
 setopt append_history
@@ -65,16 +65,20 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 # Alias
 alias ..="cd .."
 alias gt="ctags -f .vscode/tags -R ."
-alias wm="vim ~/dotfiles/i3.conf"
-alias plb="vim ~/dotfiles/polybar/config.ini"
+alias wm="vim ~/dotfiles/.config/i3/config"
+alias plb="vim ~/dotfiles/.config/polybar/config.ini"
 alias ws='cd ~/dotfiles'
 alias co='cd ~/code'
 alias v='nvim'
 alias sv='sudo nvim'
 alias vim='nvim'
-alias vimrc='nvim ~/dotfiles/vimrc'
-alias zshrc='nvim ~/dotfiles/zshrc'
-alias tmc="nvim ~/dotfiles/tmux.conf"
+alias vimrc='nvim ~/dotfiles/.vimrc'
+alias zshrc='nvim ~/dotfiles/.zshrc'
+alias tmc="nvim ~/dotfiles/.tmux.conf"
+
+alias sps="sudo pacman -S"
+alias up="sudo pacman -Syu"
+alias ys="yaourt -S"
 
 alias tml="tmux list-sessions"
 alias tmn="tmux -2 -u new -s $1"

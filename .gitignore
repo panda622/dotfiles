@@ -1,5 +1,4 @@
-terraform.tfstate*
-workstation/terraform.tfstate*
-workstation/.terraform.*
-workstation/.terraform/*
-workstation/secret.auto.tfvars
+workstation/
+
+!workstation/main.tf
+!workstation/setup.sh
