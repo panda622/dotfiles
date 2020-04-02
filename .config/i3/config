@@ -240,6 +240,7 @@ exec --no-startup-id nm-applet
 gaps inner 15
 gaps outer 15
 smart_borders on
+smart_gaps on
 
 bindsym $mod+s	gaps inner current plus 5
 bindsym $mod+Shift+s	gaps inner current minus 5

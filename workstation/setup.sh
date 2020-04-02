@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -eu
+
 pacman --noconfirm -Syu
 
 pacman --noconfirm -S \
@@ -18,8 +19,30 @@ pacman --noconfirm -S \
 	docker \
 	docker-compose \
 
-echo "===> Installing pip3 neovim"
-pip3 install neovim
+# check python for neovim
+# if pip3 list | grep -q neovim; then
+# 	echo "===> Installing pip3 neovim"
+# 	pip3 install neovim
+# fi
+
+# install 1password
+if ! [ -x "$(command -v op)" ]; then
+	echo "===> Installing 1password"
+	export OP_VERSION="v0.9.4"
+	curl -sS -o 1password.zip https://cache.agilebits.com/dist/1P/op/pkg/${OP_VERSION}/op_linux_amd64_${OP_VERSION}.zip
+	unzip 1password.zip op -d /usr/local/bin
+	rm -f 1password.zip
+fi
+
+if [ ! -f "~/.nvm" ]; then
+	export NVM_DIR="$HOME/.nvm" && (
+	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+	cd "$NVM_DIR"
+	git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+	) && \. "$NVM_DIR/nvm.sh"
+	echo "===> Installing nodejs"
+	nvm install node
+fi
 
 VIM_PLUG_FILE="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f "${VIM_PLUG_FILE}" ]; then

@@ -13,7 +13,7 @@ mkdir -p "${HOME}/.config/i3"
 mkdir -p "${HOME}/.config/nvim"
 
 ln -sfn $(pwd)/.config/i3/config "${HOME}/.config/i3/config"
-ln -sfn $(pwd)/.config/polybar/* "${HOME}/.config/polybar"
+find $(pwd)/.config/polybar -maxdepth 1  -type d -exec ln -s $HOME/.config/polybar {} \;
 
 ln -sfn $(pwd)/.vimrc "${HOME}/.config/nvim/init.vim"
 ln -sfn $(pwd)/.zshrc "${HOME}/.zshrc"
