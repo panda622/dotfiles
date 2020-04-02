@@ -35,9 +35,8 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/tpope/vim-fugitive"
     git clone "https://github.com/preservim/nerdtree"
     git clone "https://github.com/Xuyuanp/nerdtree-git-plugin"
-    git clone "https://github.com/prettier/vim-prettier"
     git clone "https://github.com/neoclide/coc.nvim"
-    git clone "https://github.com/SirVer/ultilsnips"
+	git clone "https://github.com/SirVer/ultisnips"
     git clone "https://github.com/honza/vim-snippets"
     git clone "https://github.com/majutsushi/tagbar"
     git clone "https://github.com/ludovicchabant/vim-gutentags"
@@ -54,6 +53,7 @@ if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-completions "${HOME}/.zsh/zsh-completions"
 fi
 
 if [ ! -d "$HOME/dotfiles" ]; then
@@ -62,7 +62,7 @@ if [ ! -d "$HOME/dotfiles" ]; then
   git clone --recursive https://github.com/panda622/dotfiles.git
 
   cd "$HOME/dotfiles"
-  git remote set-url origin git@github.com:panda622/dotfiles.git
+  # git remote set-url origin git@github.com:panda622/dotfiles.git
 
   mkdir -p "$HOME/.config/nvim"
   ln -sfn $(pwd)/.vimrc "${HOME}/.config/nvim/init.vim"

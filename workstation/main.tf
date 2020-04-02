@@ -10,7 +10,7 @@ resource "linode_instance" "dev" {
 	image = "linode/arch"
 	group = "sudo"
 	region = "ap-south"
-	type = "g6-standard-1"
+	type = "g6-nanode-1"
 	authorized_keys = [var.thinkpad_keys]
 
 	provisioner "file" {
