@@ -64,8 +64,6 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 
 # Alias
 alias ..="cd .."
-alias wm="vim ~/dotfiles/.config/i3/config"
-alias plb="vim ~/dotfiles/.config/polybar/config.ini"
 alias ws='cd ~/dotfiles'
 alias co='cd ~/code'
 alias v='nvim'
@@ -74,10 +72,6 @@ alias vim='nvim'
 alias vimrc='nvim ~/dotfiles/.vimrc'
 alias zshrc='nvim ~/dotfiles/.zshrc'
 alias tmc="nvim ~/dotfiles/.tmux.conf"
-
-alias sps="sudo pacman -S"
-alias up="sudo pacman -Syu"
-alias ys="yaourt -S"
 
 alias tml="tmux list-sessions"
 alias tmn="tmux -2 -u new -s $1"
@@ -106,7 +100,12 @@ case `uname` in
   ;;
   Linux)
     alias ll='ls -al'
-    alias ls='ls --color=auto' 
+    alias ls='ls --color=auto'
+	alias sps="sudo pacman -S"
+	alias up="sudo pacman -Syu"
+	alias ys="yaourt -S"
+	alias wm="vim ~/dotfiles/.config/i3/config"
+	alias plb="vim ~/dotfiles/.config/polybar/config.ini"
   ;;
 esac
 alias plisten="sudo lsof -i -P -n | grep LISTEN"
