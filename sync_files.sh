@@ -8,15 +8,22 @@ rm -rf ~/.config/polybar
 rm -rf ~/.config/i3
 rm -rf ~/.config/nvim
 
-mkdir -p "${HOME}/.config/polybar"
-mkdir -p "${HOME}/.config/i3"
 mkdir -p "${HOME}/.config/nvim"
 
-ln -sfn $(pwd)/.config/i3/config "${HOME}/.config/i3/config"
-find $(pwd)/.config/polybar -maxdepth 1  -type d -exec ln -s $HOME/.config/polybar {} \;
 
-ln -sfn $(pwd)/.vimrc "${HOME}/.config/nvim/init.vim"
-ln -sfn $(pwd)/.zshrc "${HOME}/.zshrc"
-ln -sfn $(pwd)/.tmux.conf "${HOME}/.tmux.conf"
-ln -sfn $(pwd)/.gitconfig "${HOME}/.gitconfig"
-ln -sfn $(pwd)/.ctags "${HOME}/.ctags"
+ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
+ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
+ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
+ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
+ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
+
+case `uname` in
+  Darwin)
+  ;;
+  Linux)
+	mkdir -p "${HOME}/.config/polybar"
+	mkdir -p "${HOME}/.config/i3"
+	ln -sfn $(pwd)/.config/i3/config "${HOME}/.config/i3/config"
+	find $(pwd)/.config/polybar -maxdepth 1  -type d -exec ln -sf $HOME/.config/polybar {} \;
+  ;;
+esac

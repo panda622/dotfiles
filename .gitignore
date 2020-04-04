@@ -2,3 +2,4 @@ workstation/
 
 !workstation/main.tf
 !workstation/setup.sh
+terraform.*
