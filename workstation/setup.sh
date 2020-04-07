@@ -34,7 +34,7 @@ if ! [ -x "$(command -v op)" ]; then
 	rm -f 1password.zip
 fi
 
-if [ ! -f "~/.nvm" ]; then
+if [ ! -d "~/.nvm" ]; then
 	export NVM_DIR="$HOME/.nvm" && (
 	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
 	cd "$NVM_DIR"
