@@ -23,7 +23,7 @@ pacman --noconfirm -S \
 	mosh \
 
 # check python for neovim
-if pip3 list | grep -i neovim; then
+if ! pip3 list | grep -i neovim; then
 	echo "===> Installing pip3 neovim"
 	pip3 install neovim
 fi
