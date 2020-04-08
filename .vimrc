@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'mcchrish/nnn.vim'
+  Plug 'airblade/vim-gitgutter'
 
   " Colors stuff
   Plug 'ryanoasis/vim-devicons'
@@ -95,7 +96,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " FZF
 nnoremap <Leader>p :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<CR>
 nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>g :GFiles?<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader><Space> :BLines<CR>
 imap <c-x><c-w> <plug>(fzf-complete-word)
@@ -141,3 +141,17 @@ let g:gutentags_cache_dir = "~/.ctags_cache_dir"
 let g:nnn#set_default_mappings = 0
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 nnoremap <leader>e :NnnPicker '%:p:h'<CR>
+
+" Git Fugitive
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gC :Gcommit --amend<CR>
+nnoremap <Leader>gP :Gpush<CR>
+nnoremap <Leader>gp :Gpull<CR>
+
+" Gitgutter
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
