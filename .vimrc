@@ -46,7 +46,7 @@ set mouse=a
 
 " Maping
 let mapleader = " "
-nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>dd :bd<CR>
 nnoremap <Leader>e :Explore<CR>
 nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
@@ -145,12 +145,19 @@ nnoremap <leader>e :NnnPicker '%:p:h'<CR>
 " Git Fugitive
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gC :Gcommit --amend<CR>
 nnoremap <Leader>gP :Gpush<CR>
 nnoremap <Leader>gp :Gpull<CR>
+
+nnoremap <Leader>dg :diffget<CR>
+vnoremap <Leader>dg :diffget<CR>
+nnoremap <Leader>dp :diffput<CR>
+vnoremap <Leader>dp :diffput<CR>
+vnoremap <Leader>dp :diffput<CR>
 
 " Gitgutter
 nmap ]h <Plug>(GitGutterNextHunk)

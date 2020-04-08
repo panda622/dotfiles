@@ -84,6 +84,7 @@ alias di="docker images"
 alias dc="docker-compose"
 
 alias glg="git log --oneline"
+alias glol="git log --oneline --all --decorate --graph"
 alias gco="git checkout HEAD~1 $1"
 alias gcom="git checkout master $1"
 alias gst="git status"
