@@ -20,6 +20,7 @@ pacman --noconfirm -S \
 	nnn \
 	docker \
 	docker-compose \
+	mosh \
 
 # check python for neovim
 if pip3 list | grep -i neovim; then
@@ -61,7 +62,6 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/tpope/vim-fugitive"
     git clone "https://github.com/preservim/nerdtree"
     git clone "https://github.com/Xuyuanp/nerdtree-git-plugin"
-    git clone "https://github.com/neoclide/coc.nvim"
 	git clone "https://github.com/SirVer/ultisnips"
     git clone "https://github.com/honza/vim-snippets"
     git clone "https://github.com/majutsushi/tagbar"
@@ -109,8 +109,11 @@ echo "Authenticating with 1Password"
 export OP_SESSION_my=$(op signin https://my.1password.com bbhn1362@protonmail.com --output=raw)
 echo "Pulling secrets"
 op get document 'ws_rsa' > ws_rsa
+op get document 'zsh_history' > zsh_history
 rm -f ~/.ssh/ws_rsa
+rm -f ~/.zsh_history
 ln -sfn $(pwd)/ws_rsa ~/.ssh/ws_rsa
+ln -sfn $(pwd)/zsh_history ~/.zsh_history
 chmod 0600 ~/.ssh/ws_rsa
 echo "Done!"
 EOF
@@ -120,4 +123,6 @@ EOF
   mv pull-secrets.sh ~/secrets
 fi
 
+ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+echo 'tren-may' > /etc/hostname
 chsh -s /bin/zsh
