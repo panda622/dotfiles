@@ -1,15 +1,22 @@
 [sensors]
-label=Temp: 
+label=TEMP: 
 command=~/dotfiles/.config/i3blocks/sensors.sh
 interval=1
 color=#32CD32
 
 [battery]
-label=Battery: 
+label=BAT: 
 command=~/dotfiles/.config/i3blocks/battery.sh
 interval=10
 color=#A4C2F4
 
+[volume]
+label=VOL: 
+command=~/dotfiles/.config/i3blocks/volume.sh
+interval=once
+signal=1
+color=#A4C2F4
+
 [time]
-command=date "+%R %a %d/%m/%y"
+command=~/dotfiles/.config/i3blocks/date.sh
 interval=5

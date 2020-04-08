@@ -109,3 +109,6 @@ case `uname` in
   ;;
 esac
 alias plisten="sudo lsof -i -P -n | grep LISTEN"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

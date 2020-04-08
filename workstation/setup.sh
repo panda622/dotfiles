@@ -16,14 +16,16 @@ pacman --noconfirm -S \
 	mosh \
 	python \
 	python-pip \
+	htop \
+	nnn \
 	docker \
 	docker-compose \
 
 # check python for neovim
-# if pip3 list | grep -q neovim; then
-# 	echo "===> Installing pip3 neovim"
-# 	pip3 install neovim
-# fi
+if pip3 list | grep -i neovim; then
+	echo "===> Installing pip3 neovim"
+	pip3 install neovim
+fi
 
 # install 1password
 if ! [ -x "$(command -v op)" ]; then
@@ -34,7 +36,7 @@ if ! [ -x "$(command -v op)" ]; then
 	rm -f 1password.zip
 fi
 
-if [ ! -d "~/.nvm" ]; then
+if ! [ -x "$(command -v node)" ]; then
 	export NVM_DIR="$HOME/.nvm" && (
 	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
 	cd "$NVM_DIR"
@@ -42,14 +44,15 @@ if [ ! -d "~/.nvm" ]; then
 	) && \. "$NVM_DIR/nvm.sh"
 	echo "===> Installing nodejs"
 	nvm install node
+	npm install -g yarn
 fi
 
 VIM_PLUG_FILE="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f "${VIM_PLUG_FILE}" ]; then
   echo " ==> Installing vim plugins"
   curl -fLo ${VIM_PLUG_FILE} --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  mkdir -p "${HOME}/.config/nvim/plugged"
-  pushd "${HOME}/.config/nvim/plugged"
+  mkdir -p "${HOME}/.vim/plugged"
+  pushd "${HOME}/.vim/plugged"
     git clone "https://github.com/junegunn/fzf"
     git clone "https://github.com/junegunn/fzf.vim"
     git clone "https://github.com/tpope/vim-surround"
@@ -64,6 +67,7 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/majutsushi/tagbar"
     git clone "https://github.com/ludovicchabant/vim-gutentags"
     git clone "https://github.com/mcchrish/nnn.vim"
+    git clone "https://github.com/prettier/vim-prettier"
 
     git clone "https://github.com/ryanoasis/vim-devicons"
     git clone "https://github.com/Yggdroot/indentLine"
@@ -85,7 +89,7 @@ if [ ! -d "$HOME/dotfiles" ]; then
   git clone --recursive https://github.com/panda622/dotfiles.git
 
   cd "$HOME/dotfiles"
-  # git remote set-url origin git@github.com:panda622/dotfiles.git
+  git remote set-url origin git@github.com:panda622/dotfiles.git
 
   mkdir -p "$HOME/.config/nvim"
   ln -sfn $(pwd)/.vimrc "${HOME}/.config/nvim/init.vim"
@@ -93,6 +97,27 @@ if [ ! -d "$HOME/dotfiles" ]; then
   ln -sfn $(pwd)/.tmux.conf "${HOME}/.tmux.conf"
   ln -sfn $(pwd)/.gitconfig "${HOME}/.gitconfig"
   ln -sfn $(pwd)/.ctags "${HOME}/.ctags"
+fi
+
+if [ ! -f "/root/secrets/pull-secrets.sh" ]; then
+  echo "==> Creating pull-secret.sh script"
+
+cat > pull-secrets.sh <<'EOF'
+#!/bin/bash
+set -eu
+echo "Authenticating with 1Password"
+export OP_SESSION_my=$(op signin https://my.1password.com bbhn1362@protonmail.com --output=raw)
+echo "Pulling secrets"
+op get document 'ws_rsa' > ws_rsa
+rm -f ~/.ssh/ws_rsa
+ln -sfn $(pwd)/ws_rsa ~/.ssh/ws_rsa
+chmod 0600 ~/.ssh/ws_rsa
+echo "Done!"
+EOF
+
+  mkdir -p /root/secrets
+  chmod +x pull-secrets.sh
+  mv pull-secrets.sh ~/secrets
 fi
 
 chsh -s /bin/zsh
