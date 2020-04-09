@@ -7,12 +7,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
+
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'mcchrish/nnn.vim'
+  Plug 'prettier/vim-prettier', { 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
   Plug 'airblade/vim-gitgutter'
 
   " Colors stuff
