@@ -39,3 +39,7 @@ resource "linode_instance" "dev" {
 		}
 	}
 }
+
+output "public_ip" {
+  value = "${linode_instance.dev.ip_address}"
+}
