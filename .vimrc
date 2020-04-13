@@ -44,9 +44,9 @@ set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set clipboard=unnamedplus
-set termguicolors
-set background=dark
-colorscheme gruvbox
+" set termguicolors
+set background=light
+colorscheme zellner
 set mouse=a
 
 " Maping
