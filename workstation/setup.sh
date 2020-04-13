@@ -62,7 +62,6 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/tpope/vim-fugitive"
     git clone "https://github.com/preservim/nerdtree"
     git clone "https://github.com/Xuyuanp/nerdtree-git-plugin"
-    git clone "https://github.com/neoclide/coc.nvim"
 	git clone "https://github.com/SirVer/ultisnips"
     git clone "https://github.com/honza/vim-snippets"
     git clone "https://github.com/majutsushi/tagbar"
