@@ -20,7 +20,6 @@ pacman --noconfirm -S \
 	nnn \
 	docker \
 	docker-compose \
-	mosh \
 
 # check python for neovim
 if ! pip3 list | grep -i neovim; then

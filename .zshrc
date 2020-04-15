@@ -2,6 +2,7 @@
 export ZSH="${HOME}/.zsh"
 export EDITOR="nvim"
 export NVM_DIR="$HOME/.nvm"
+export LC_CTYPE="en_US.UTF-8" 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Plugins
@@ -83,9 +84,10 @@ alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
 
+alias gb="git branch"
 alias glg="git log --oneline"
 alias glol="git log --oneline --all --decorate --graph"
-alias gco="git checkout HEAD~1 $1"
+alias gco="git checkout $1"
 alias gcom="git checkout master $1"
 alias gst="git status"
 alias gaa="git add ."
@@ -93,6 +95,8 @@ alias gcmsg="git commit -m $1"
 alias ggpush="git po"
 alias ggpull="git pull origin master"
 alias gc!="git commit --amend --no-edit"
+
+alias portlisten="netstat -anp tcp | grep LISTEN"
 
 case `uname` in
   Darwin)

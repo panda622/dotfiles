@@ -9,8 +9,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'Xuyuanp/nerdtree-git-plugin'
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
+  " Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+  " Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -24,7 +24,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'ryanoasis/vim-devicons'
   Plug 'sheerun/vim-polyglot'
   Plug 'Yggdroot/indentLine'
-  Plug 'morhetz/gruvbox'
+  Plug 'jonathanfilip/vim-lucius'
 call plug#end()
 
 " Basic
@@ -45,8 +45,8 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set clipboard=unnamedplus
 set termguicolors
-set background=dark
-colorscheme gruvbox
+set background=light
+colorscheme lucius
 set mouse=a
 
 " Maping
@@ -58,7 +58,7 @@ nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
 nnoremap <Leader>c :e <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>y :!cp % <C-R>=expand('%:p:h')<CR>/
-nnoremap <Leader>r :!mv <C-R>=expand('%:p:h')<CR>/
+nnoremap <Leader>r :!mv <C-R>=expand('%:p')<CR>
 nnoremap <Leader>f :PrettierAsync<CR>
 nnoremap <Leader>s *:%s/<C-R><C-W>/
 nnoremap n nzz
