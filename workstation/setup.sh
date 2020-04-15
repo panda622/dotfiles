@@ -115,6 +115,9 @@ ln -sfn $(pwd)/ws_rsa ~/.ssh/ws_rsa
 ln -sfn $(pwd)/zsh_history ~/.zsh_history
 chmod 0600 ~/.ssh/ws_rsa
 echo "Done!"
+
+echo 'eval "$(ssh-agent -s)"'
+echo 'ssh-add ~/.ssh/ws_rsa'
 EOF
 
   mkdir -p /root/secrets
