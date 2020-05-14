@@ -5,12 +5,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
-  Plug 'preservim/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'tpope/vim-rails'
 
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'preservim/nerdtree'
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -18,13 +18,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'mcchrish/nnn.vim'
   Plug 'prettier/vim-prettier', { 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
-  Plug 'airblade/vim-gitgutter'
 
   " Colors stuff
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'sheerun/vim-polyglot'
-  Plug 'Yggdroot/indentLine'
-  Plug 'jonathanfilip/vim-lucius'
+  Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Basic
@@ -45,26 +41,25 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
 set clipboard=unnamedplus
 set termguicolors
-set background=light
-colorscheme lucius
+set background=dark
+colorscheme gruvbox
 set mouse=a
 
 " Maping
 let mapleader = " "
 nnoremap <Leader>dd :bd<CR>
-nnoremap <Leader>e :Explore<CR>
 nnoremap <silent><Leader>n :nohlsearch<CR>
 nnoremap <Leader>w :%s/\s\+$//e<CR>
 nnoremap <Tab> :b#<CR>
 nnoremap <Leader>c :e <C-R>=expand('%:p:h')<CR>/
 nnoremap <Leader>y :!cp % <C-R>=expand('%:p:h')<CR>/
-nnoremap <Leader>r :!mv <C-R>=expand('%:p')<CR>
+nnoremap <Leader>r :!mv % <C-R>=expand('%:p')<CR>
 nnoremap <Leader>f :PrettierAsync<CR>
 nnoremap <Leader>s *:%s/<C-R><C-W>/
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
+nnoremap * *N
+nnoremap # #n
 nnoremap L $
 nnoremap H ^
 nnoremap Y y$
@@ -100,6 +95,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " FZF
 nnoremap <Leader>p :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<CR>
+" nnoremap <Leader>p :call fzf#run(fzf#wrap())<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader><Space> :BLines<CR>
@@ -146,24 +142,3 @@ let g:gutentags_cache_dir = "~/.ctags_cache_dir"
 let g:nnn#set_default_mappings = 0
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 nnoremap <leader>e :NnnPicker '%:p:h'<CR>
-
-" Git Fugitive
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gC :Gcommit --amend<CR>
-nnoremap <Leader>gP :Gpush<CR>
-nnoremap <Leader>gp :Gpull<CR>
-
-nnoremap <Leader>dg :diffget<CR>
-vnoremap <Leader>dg :diffget<CR>
-nnoremap <Leader>dp :diffput<CR>
-vnoremap <Leader>dp :diffput<CR>
-vnoremap <Leader>dp :diffput<CR>
-
-" Gitgutter
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
