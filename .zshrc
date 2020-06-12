@@ -2,19 +2,14 @@
 export ZSH="${HOME}/.zsh"
 export EDITOR="nvim"
 export NVM_DIR="$HOME/.nvm"
-export LC_CTYPE="en_US.UTF-8" 
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export LC_CTYPE="en_US.UTF-8"
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore-vcs --hidden"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+ export REVIEW_BASE="release/R2.8_June"
 
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-completions/zsh-completions.plugin.zsh
-
-bindkey "^e" autosuggest-accept
-bindkey "^p" history-beginning-search-backward
-bindkey "^n" history-beginning-search-forward
-bindkey -v
 
 export KEYTIMEOUT=1
 
@@ -33,10 +28,8 @@ setopt inc_append_history
 # share command history data
 setopt share_history
 
-
-# PS1
-autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+# Prompt
+source ~/dotfiles/git-prompt.sh
 
 # Alias
 alias ..="cd .."
@@ -69,7 +62,7 @@ alias gst="git status"
 alias gaa="git add ."
 alias gcmsg="git commit -m $1"
 alias ggpush="git po"
-alias ggpull="git pull origin master"
+alias ggpull="git pull origin $REVIEW_BASE"
 alias gc!="git commit --amend --no-edit"
 
 alias portlisten="netstat -anp tcp | grep LISTEN"
@@ -78,18 +71,27 @@ case `uname` in
   Darwin)
     alias ls='ls -GpF' # Mac OSX specific
     alias ll='ls -alGpF' # Mac OSX specific
-  ;;
+    ;;
   Linux)
     alias ll='ls -al'
     alias ls='ls --color=auto'
-	alias sps="sudo pacman -S"
-	alias up="sudo pacman -Syu"
-	alias ys="yaourt -S"
-	alias wm="vim ~/dotfiles/.config/i3/config"
-	alias plb="vim ~/dotfiles/.config/polybar/config.ini"
-  ;;
+    alias sps="sudo pacman -S"
+    alias up="sudo pacman -Syu"
+    alias ys="yaourt -S"
+    alias wm="vim ~/dotfiles/.config/i3/config"
+    alias plb="vim ~/dotfiles/.config/polybar/config.ini"
+    ;;
 esac
 alias plisten="sudo lsof -i -P -n | grep LISTEN"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+function edit_and_run() {
+  BUFFER="fc"
+  zle accept-line
+}
+zle -N edit_and_run
+bindkey "^v" edit_and_run
