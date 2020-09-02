@@ -4,12 +4,14 @@ export EDITOR="nvim"
 export NVM_DIR="$HOME/.nvm"
 export LC_CTYPE="en_US.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore-vcs --hidden"
+export PATH="$PATH:`pwd`/flutter/bin"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
- export REVIEW_BASE="release/R2.8_June"
+export PATH="$HOME/myscript:${PATH}"
 
 # Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-completions/zsh-completions.plugin.zsh
 
 export KEYTIMEOUT=1
 
@@ -83,6 +85,7 @@ case `uname` in
     ;;
 esac
 alias plisten="sudo lsof -i -P -n | grep LISTEN"
+alias grep='grep --color=auto'
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -95,3 +98,13 @@ function edit_and_run() {
 }
 zle -N edit_and_run
 bindkey "^v" edit_and_run
+
+
+alias wifi='nmcli c down "Wired connection 2" && nmcli c up "wifi-guest"'
+alias ethernet='nmcli c down "wifi-guest" && nmcli c up "Wired connection 2"'
+alias activenet='sudo route add -net 10.91.9.0/24 gw 10.91.16.65 & sudo route add -net 172.29.0.0/16 gw 10.91.16.65'
+
+# sudo route add -net 10.91.9.0/24 gw 10.91.16.65 & sudo route add -net 172.29.0.0/16 gw 10.91.16.65
+
+# xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.6
+# xinput set-prop 'Logitech M545/M546' 'libinput Accel Speed' 0

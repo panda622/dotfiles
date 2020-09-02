@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
@@ -8,12 +7,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-rails'
 
   Plug 'preservim/nerdtree'
-  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
-  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc-tsserver'
+  Plug 'neoclide/coc-prettier'
+  Plug 'neoclide/coc-solargraph'
 
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  " Plug 'SirVer/ultisnips'
+  " Plug 'honza/vim-snippets'
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'mcchrish/nnn.vim'
@@ -23,9 +23,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'morhetz/gruvbox'
   Plug 'sheerun/vim-polyglot'
   Plug 'fatih/molokai'
-
-  Plug 'xolox/vim-notes'
-  Plug 'xolox/vim-misc'
 call plug#end()
 
 " Basic
@@ -40,20 +37,18 @@ set dictionary=/usr/share/dict/words
 set number
 set hidden
 set scrolloff=5 ls=2
-" set tabstop=4 shiftwidth=4 noexpandtab ai
 set noexpandtab shiftwidth=4 tabstop=4 ai
 set ignorecase incsearch hlsearch
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set updatetime=300
-" set clipboard=unnamedplus
+set clipboard+=unnamedplus
 set termguicolors
-" let g:gruvbox_contrast_light='medium'
-set background=dark
+" let g:gruvbox_contrast_light='hard'
+" set background=light
 colorscheme molokai
-set mouse=a
 
-autocmd BufNewFile,BufRead *.ts set syntax=javascript
-autocmd BufNewFile,BufRead *.tsx set syntax=javascript
+" autocmd BufNewFile,BufRead *.ts set syntax=javascript
+" autocmd BufNewFile,BufRead *.tsx set syntax=javascript
 
 " Maping
 let mapleader = " "
@@ -104,7 +99,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " FZF
-nnoremap <Leader>p :call fzf#run(fzf#wrap({'source': 'git ls-files', 'sink': 'e'}))<CR>
+nnoremap <Leader>p :FZF<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader><Space> :BLines<CR>
@@ -137,8 +132,8 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 " Ag searcher
-nnoremap \ :Rg<CR>
-nnoremap \| :Rg <C-R><C-W><CR>
+nnoremap \ :Ag<Space>
+nnoremap \| :Ag <C-R><C-W><CR>
 
 " Tagbar
 nmap <C-t> :TagbarToggle<CR>
@@ -190,7 +185,3 @@ set autoread
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-
-" Notes
-let g:notes_directories = ['~/Dropbox/english-docs']
-let g:notes_suffix = '.txt'
