@@ -18,21 +18,6 @@ alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
 
-alias gb="git branch"
-alias gcb="git checkout -b $1"
-alias glg="git log --oneline"
-alias glol="git log --oneline --all --decorate --graph"
-alias gco="git checkout $1"
-alias gcom="git checkout master $1"
-alias gst="git status"
-alias gaa="git add ."
-alias gcmsg="git commit -m $1"
-alias ggpush="git po"
-alias ggpull="git pull origin $REVIEW_BASE"
-alias gc!="git commit --amend --no-edit"
-
-alias portlisten="netstat -anp tcp | grep LISTEN"
-
 case `uname` in
   Darwin)
     alias ls='ls -GpF' # Mac OSX specific

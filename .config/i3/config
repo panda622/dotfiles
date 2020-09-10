@@ -1,9 +1,11 @@
 set $mod Mod4
 
-for_window [class="^.*"] border pixel 2
-exec_always --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/blue.png
+for_window [class="^.*"] border pixel 3
+# exec_always --no-startup-id feh --bg-scale ~/Pictures/wallhaven-967zyk_1920x1080.png
+exec_always --no-startup-id xsetroot -solid "#29bdc1"
 exec_always --no-startup-id xautolock -time 15 -locker "betterlockscreen -l"
 exec_always --no-startup-id dunst
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 bindsym $mod+Shift+BackSpace exec betterlockscreen -l
 
@@ -23,11 +25,11 @@ bindsym $mod+Shift+q kill
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_run -b -fn "Iosevka:size=11"
 
-exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps" -option "altwin:swap_alt_win"
+exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps"
 exec --no-startup-id xset r rate 200 40
-exec --no-startup-id xinput --set-prop 'TPPS/2 IBM TrackPoint' 'libinput Accel Speed' -0.4
+exec_always --no-startup-id xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.4
 exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Natural Scrolling Enabled' 1
-exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1
+exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'Device Enabled' 1
 exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.25
 # exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'Device Enabled' 0
 exec_always --no-startup-id compton
@@ -279,7 +281,7 @@ client.background $base07
 # for_window [class=".*"] title_format "<span font='Monospace 12'> %title</span>"
 font pango: Noto Sans 10
 
-bar {
-  status_command i3blocks
-  font pango: Inconsolata 10
-}
+##bar {
+##  status_command i3blocks
+##  font pango: Inconsolata 10
+##}
