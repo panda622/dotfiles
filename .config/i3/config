@@ -1,124 +1,91 @@
+# Global
 set $mod Mod4
+floating_modifier $mod
+for_window [class="^.*"] border pixel 1
 
-for_window [class="^.*"] border pixel 3
-# exec_always --no-startup-id feh --bg-scale ~/Pictures/wallhaven-967zyk_1920x1080.png
-exec_always --no-startup-id xsetroot -solid "#29bdc1"
+# Gaps Config
+gaps inner 15
+gaps outer 15
+smart_borders on
+smart_gaps on
+bindsym $mod+s	gaps inner current plus 5
+bindsym $mod+Shift+s	gaps inner current minus 5
+bindsym $mod+t	gaps outer current plus 5
+bindsym $mod+Shift+t	gaps outer current minus 5
+
+# Startup Apps
+# exec_always --no-startup-id xsetroot -solid "#1B2631"
+exec_always --no-startup-id feh --bg-fill ~/Pictures/leave.png
 exec_always --no-startup-id xautolock -time 15 -locker "betterlockscreen -l"
 exec_always --no-startup-id dunst
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps"
+exec --no-startup-id xset r rate 200 40
+exec_always --no-startup-id xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.45
+exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Natural Scrolling Enabled' 1
+exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'Device Enabled' 1
+#exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'libinput Accel Speed' 0.25
+exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 1
+exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.25
+exec_always --no-startup-id compton
+exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/goldendict'
+exec --no-startup-id nm-applet
+
+# Binding keys
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 bindsym $mod+Shift+BackSpace exec betterlockscreen -l
-
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
-
-# Use Mouse+$mod to drag floating windows
-floating_modifier $mod
-
-# start a terminal
 bindsym $mod+Return exec st
-
-# kill focused window
 bindsym $mod+Shift+q kill
-
-# start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_run -b -fn "Iosevka:size=11"
-
-exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps"
-exec --no-startup-id xset r rate 200 40
-exec_always --no-startup-id xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.4
-exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Natural Scrolling Enabled' 1
-exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'Device Enabled' 1
-exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.25
-# exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'Device Enabled' 0
-exec_always --no-startup-id compton
+bindsym $mod+d exec --no-startup-id dmenu_run -b -fn "Iosevka:size=12"
 bindsym $mod+Ctrl+m exec pavucontrol
-
-# volume
-bindsym XF86AudioLowerVolume exec ~/dotfiles/.config/i3/utils/volume_decrease.sh && pkill -RTMIN+10 i3blocks 
-bindsym XF86AudioRaiseVolume exec ~/dotfiles/.config/i3/utils/volume_increase.sh && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioLowerVolume exec ~/dotfiles/.config/i3/utils/volume_decrease.sh && pkill -RTMIN+5 i3blocks 
+bindsym XF86AudioRaiseVolume exec ~/dotfiles/.config/i3/utils/volume_increase.sh && pkill -RTMIN+5 i3blocks 
 bindsym XF86AudioMute exec ~/dotfiles/.config/i3/utils/volume_mute.sh && pkill -RTMIN+10 i3blocks
-
-
-################################################################################################
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
-# brightness
 bindsym XF86MonBrightnessDown exec ~/dotfiles/.config/i3/utils/brightness_decrease.sh
 bindsym XF86MonBrightnessUp exec ~/dotfiles/.config/i3/utils/brightness_increase.sh
-
-# Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec palemoon
-bindsym $mod+b exec firefox
+bindsym $mod+b exec google-chrome-stable
 bindsym $mod+F3 exec pcmanfm
-# bindsym $mod+F3 exec ranger
 bindsym Print exec --no-startup-id scrot
 bindsym $mod+Print --release exec --no-startup-id scrot -s
 
-# change focus
+# Navigations
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left move left
 bindsym $mod+Down move down
 bindsym $mod+Up move up
 bindsym $mod+Right move right
 
+# Sizing and Postion
 bindsym $mod+Shift+h resize shrink width 5 px or 5 ppt
 bindsym $mod+Shift+j resize grow height 5 px or 5 ppt
 bindsym $mod+Shift+k resize shrink height 5 px or 5 ppt
 bindsym $mod+Shift+l resize grow width 5 px or 5 ppt
-
-# workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
-
-# split orientation
 bindsym $mod+shift+v split v;exec notify-send 'tile horizontally'
 bindsym $mod+v split h;exec notify-send 'tile vertically'
 bindsym $mod+q split toggle
-
-# toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+w layout toggle split
 bindsym $mod+e layout tabbed
-
-# toggle tiling / floating
+bindsym $mod+Shift+w layout stacking
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
-
-# toggle sticky
-# bindsym $mod+Shift+s sticky toggle
-
-# focus the parent container
 bindsym $mod+a focus parent
-
-# move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
-
-#navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
-
-# Workspace names
-# to display names or symbols instead of plain workspace numbers you can use
-# something like: set $ws1 1:mail
-#                 set $ws2 2:
 set $ws1 1
 set $ws2 2
 set $ws3 3
@@ -130,128 +97,58 @@ set $ws8 8
 set $ws9 9
 set $ws10 10
 
-exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/goldendict'
-
-# switch to workspace
-# switch to workspace
-#bindsym $mod+1 workspace $ws1
 bindsym $mod+Home workspace $ws1
 bindsym $mod+ampersand workspace $ws1
-
-#bindsym $mod+2 workspace $ws2
 bindsym $mod+bracketleft workspace $ws2
-
-#bindsym $mod+3 workspace $ws3
 bindsym $mod+braceleft workspace $ws3
-
-#bindsym $mod+4 workspace $ws4
 bindsym $mod+braceright workspace $ws4
-
-#bindsym $mod+5 workspace $ws5
 bindsym $mod+parenleft workspace $ws5
-
-#bindsym $mod+6 workspace $ws6
 bindsym $mod+equal workspace $ws6
-
-#bindsym $mod+7 workspace $ws7
 bindsym $mod+asterisk workspace $ws7
-
-#bindsym $mod+8 workspace $ws8
 bindsym $mod+parenright workspace $ws8
-
-#bindsym $mod+9 workspace $ws9
 bindsym $mod+plus workspace $ws9
-
-#bindsym $mod+0 workspace $ws10
 bindsym $mod+bracketright workspace $ws10
 bindsym $mod+End workspace $ws10
-
-# move focused container to workspace
 bindsym $mod+Shift+Home move container to workspace $ws1
 bindsym $mod+Shift+percent move container to workspace $ws1
-
 bindsym $mod+Shift+7 move container to workspace $ws2
-
 bindsym $mod+Shift+5 move container to workspace $ws3
-
 bindsym $mod+Shift+3 move container to workspace $ws4
-
 bindsym $mod+Shift+1 move container to workspace $ws5
-
 bindsym $mod+Shift+9 move container to workspace $ws6
-
 bindsym $mod+Shift+0 move container to workspace $ws7
-
 bindsym $mod+Shift+2 move container to workspace $ws8
-
 bindsym $mod+Shift+4 move container to workspace $ws9
-
 bindsym $mod+Shift+6 move container to workspace $ws10
 bindsym $mod+Shift+End move container to workspace $ws10
 
-# Open applications on specific workspaces
-# assign [class="Thunderbird"] $ws1
-# assign [class="Pale moon"] $ws2
-# assign [class="Pcmanfm"] $ws3
-# assign [class="Skype"] $ws5
-
-# Open specific applications in floating mode
+# Config specific window
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Skype"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
-
-# switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# Rotate Screen
+# Screen rotation
 set $screen eDP1
 set $res 1920x1080
 bindsym $mod+Shift+Left exec xrandr --output $screen --mode $res --pos 0x0 --rotate left 
 bindsym $mod+Shift+Up exec xrandr  --output $screen --mode $res --pos 0x0 --rotate normal 
 bindsym $mod+Shift+Right exec xrandr --output $screen --mode $res --pos 0x0 --rotate right 
-
-
-# Set shut down, restart and locking features
 bindsym $mod+BackSpace mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-# Autostart applications
-exec --no-startup-id nm-applet
-
-# Set inner/outer gaps
-gaps inner 15
-gaps outer 0
-smart_borders on
-# smart_gaps on
-
-bindsym $mod+s	gaps inner current plus 5
-bindsym $mod+Shift+s	gaps inner current minus 5
-
-bindsym $mod+t	gaps outer current plus 5
-bindsym $mod+Shift+t	gaps outer current minus 5
-
-
+# Theme
 set_from_resource $base00 i3wm.color0 #000000
 set_from_resource $base01 i3wm.color18 #000000
 set_from_resource $base02 i3wm.color19 #000000
@@ -268,20 +165,10 @@ set_from_resource $base0C i3wm.color14 #000000
 set_from_resource $base0D i3wm.color12 #000000
 set_from_resource $base0E i3wm.color13 #000000
 set_from_resource $base0F i3wm.color17 #000000
-
-# Property Name         Border  BG      Text    Indicator Child Border
 client.focused          $base05 $base0D $base00 #0bd500 $base0D
 client.focused_inactive $base01 $base01 $base05 #0bd500 $base01
 client.unfocused        $base01 $base00 $base05 #0bd500 $base01
 client.urgent           $base08 $base08 $base00 #0bd500 $base08
 client.placeholder      $base00 $base00 $base05 #0bd500 $base00
 client.background $base07
-
-# for_window [class=".*"] title_format "<b>%title</b>"
-# for_window [class=".*"] title_format "<span font='Monospace 12'> %title</span>"
 font pango: Noto Sans 10
-
-##bar {
-##  status_command i3blocks
-##  font pango: Inconsolata 10
-##}
