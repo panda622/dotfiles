@@ -7,6 +7,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/myscript:${PATH}"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$HOME/.gem/ruby/2.7.0/bin:${PATH}"
+export PATH="$PATH:$HOME/Documents/flutter/bin"
 
 # Config
 ZSH_THEME="steeef"
@@ -20,3 +21,4 @@ source ~/dotfiles/alias.sh
 
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
+

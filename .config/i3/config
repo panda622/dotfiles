@@ -1,24 +1,33 @@
 # Global
 set $mod Mod4
 floating_modifier $mod
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 3
+
+# Bar
+bar {
+  status_command    i3status
+  position          bottom
+  workspace_buttons yes
+  # font pango:Misc Tamsyn 12
+}
+bindsym $mod+m bar mode toggle
 
 # Gaps Config
 gaps inner 15
 gaps outer 15
 smart_borders on
-smart_gaps on
+# smart_gaps on
 bindsym $mod+s	gaps inner current plus 5
 bindsym $mod+Shift+s	gaps inner current minus 5
 bindsym $mod+t	gaps outer current plus 5
 bindsym $mod+Shift+t	gaps outer current minus 5
 
 # Startup Apps
-# exec_always --no-startup-id xsetroot -solid "#1B2631"
-exec_always --no-startup-id feh --bg-fill ~/Pictures/leave.png
+# exec_always --no-startup-id xsetroot -solid "#808080"
+exec_always --no-startup-id feh --bg-fill ~/Pictures/smail.png
 exec_always --no-startup-id xautolock -time 15 -locker "betterlockscreen -l"
 exec_always --no-startup-id dunst
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+# exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps"
 exec --no-startup-id xset r rate 200 40
 exec_always --no-startup-id xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.45
@@ -28,7 +37,7 @@ exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'Device Enabled' 1
 exec_always --no-startup-id xinput --set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 1
 exec --no-startup-id xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Accel Speed' 0.25
 exec_always --no-startup-id compton
-exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/goldendict'
+exec --no-startup-id i3-msg /usr/bin/goldendict
 exec --no-startup-id nm-applet
 
 # Binding keys
@@ -147,28 +156,3 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-# Theme
-set_from_resource $base00 i3wm.color0 #000000
-set_from_resource $base01 i3wm.color18 #000000
-set_from_resource $base02 i3wm.color19 #000000
-set_from_resource $base03 i3wm.color8 #000000
-set_from_resource $base04 i3wm.color20 #000000
-set_from_resource $base05 i3wm.color7 #000000
-set_from_resource $base06 i3wm.color21 #000000
-set_from_resource $base07 i3wm.color15 #000000
-set_from_resource $base08 i3wm.color10 #000000
-set_from_resource $base09 i3wm.color16 #000000
-set_from_resource $base0A i3wm.color11 #000000
-set_from_resource $base0B i3wm.color10 #000000
-set_from_resource $base0C i3wm.color14 #000000
-set_from_resource $base0D i3wm.color12 #000000
-set_from_resource $base0E i3wm.color13 #000000
-set_from_resource $base0F i3wm.color17 #000000
-client.focused          $base05 $base0D $base00 #0bd500 $base0D
-client.focused_inactive $base01 $base01 $base05 #0bd500 $base01
-client.unfocused        $base01 $base00 $base05 #0bd500 $base01
-client.urgent           $base08 $base08 $base00 #0bd500 $base08
-client.placeholder      $base00 $base00 $base05 #0bd500 $base00
-client.background $base07
-font pango: Noto Sans 10
