@@ -21,4 +21,3 @@ source ~/dotfiles/alias.sh
 
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
-

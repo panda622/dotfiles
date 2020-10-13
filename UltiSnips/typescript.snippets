@@ -1,0 +1,87 @@
+snippet ctor "constructor" b
+constructor(${0}) {
+	${1:// code}
+}
+endsnippet
+
+snippet fun "function (fun)"
+function ${1:function_name}(${2:argument}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet af "arrow function (af)"
+(${1:argument}) => {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ife "if ___ else"
+if (${1:condition}) {
+	${2://code}
+} else {
+	${3://code}
+}
+endsnippet
+
+snippet cl "console.log" b
+console.log(${1:"${2:value}"});
+endsnippet
+
+snippet ehd "Event Handler"
+@EventHandler(${1:EventName})
+public async handle$1(
+	root: $1,
+): Promise<EventResult<RootEvent>> {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ns "New Service Handle"
+import { Injectable, Logger } from "@nestjs/common";
+import { EventRepository, EventHandler} from "@internal/core/event-manager/event.decorator";
+import { EventManagerService } from "@internal/core/event-manager/event-manager.service";
+import { RootEvent, EventResult } from "@internal/core/event-manager/event.model";
+
+@Injectable()
+@EventRepository()
+export class ${1:Service} {
+	private logger = new Logger($1.name);
+
+	constructor(
+		protected eventService: EventManagerService,
+	) {}
+}
+endsnippet
+
+snippet ne "New Event Declare"
+import { RootEvent, EventSuccess, } from "@internal/core/event-manager/event.model";
+
+export class $1RootEvent extends RootEvent {
+	public successEvent = $1SuccessEvent;
+	constructor() {
+		super();
+	}
+}
+
+export class $1SuccessEvent extends EventSuccess<$1RootEvent> {
+	constructor(public identity: $1RootEvent) {
+		super(identity);
+	}
+}
+endsnippet
+
+snippet nm "New Module"
+import { Module } from "@nestjs/common";
+import { EventManagerModule } from "@internal/core/event-manager/event-manager.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+
+@Module({
+	imports: [
+		TypeOrmModule.forFeature([]),
+		EventManagerModule,
+	],
+	providers: [],
+})
+export class $1Module {}
+endsnippet

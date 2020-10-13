@@ -11,6 +11,7 @@ mkdir -p "${HOME}/.config/nvim"
 
 
 ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
+ln -sfn ~/dotfiles/UltiSnips "${HOME}/.config/nvim/UltiSnips"
 ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
 ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
 ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"

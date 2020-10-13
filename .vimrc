@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'morhetz/gruvbox'
   Plug 'arzg/vim-colors-xcode'
+  Plug 'SirVer/ultisnips'
 call plug#end()
 
 syntax on
@@ -24,7 +25,8 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-colors xcodelighthc
+colors gruvbox
+" colors xcodelighthc
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
@@ -115,3 +117,7 @@ set autoread
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
