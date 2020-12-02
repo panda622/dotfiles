@@ -5,6 +5,7 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/myscript:${PATH}"
+export PATH="$HOME/myscript/dev-gen:${PATH}"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$HOME/.gem/ruby/2.7.0/bin:${PATH}"
 export PATH="$PATH:$HOME/Documents/flutter/bin"

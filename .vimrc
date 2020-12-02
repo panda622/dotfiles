@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'morhetz/gruvbox'
   Plug 'arzg/vim-colors-xcode'
+  Plug 'dart-lang/dart-vim-plugin'
   Plug 'SirVer/ultisnips'
 call plug#end()
 
@@ -25,8 +26,9 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-colors gruvbox
-" colors xcodelighthc
+set colorcolumn=80
+" colors default
+colors xcodelighthc
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
