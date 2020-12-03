@@ -1,40 +1,37 @@
 #!/bin/bash
-
+# Ref: https://github.com/fatih/dotfiles/blob/master/bootstrap.sh
 set -eu
 
-pacman --noconfirm -Syu
+export DEBIAN_FRONTEND=noninteractive
 
-pacman --noconfirm -S \
-	git \
-	ctags \
-	zsh \
-	tmux \
-	neovim \
-	the_silver_searcher \
-	fzf \
-	unzip \
-	mosh \
-	python \
-	python-pip \
-	htop \
-	nnn \
-	docker \
-	docker-compose \
+UPGRADE_PACKAGES=${1:-none}
 
-# check python for neovim
-if ! pip3 list | grep -i neovim; then
-	echo "===> Installing pip3 neovim"
-	pip3 install neovim
+if [ "${UPGRADE_PACKAGES}" != "none" ]; then
+  echo "==> Updating and upgrading packages ..."
+  # Add third party repositories
+  sudo add-apt-repository ppa:keithw/mosh-dev -y
+  sudo apt-get update
+  sudo apt-get upgrade -y
 fi
 
-# install 1password
-if ! [ -x "$(command -v op)" ]; then
-	echo "===> Installing 1password"
-	export OP_VERSION="v0.9.4"
-	curl -sS -o 1password.zip https://cache.agilebits.com/dist/1P/op/pkg/${OP_VERSION}/op_linux_amd64_${OP_VERSION}.zip
-	unzip 1password.zip op -d /usr/local/bin
-	rm -f 1password.zip
-fi
+sudo apt-get install -qq \
+  git \
+  ctags \
+  zsh \
+  tmux \
+  neovim \
+  silversearcher-ag \
+  fzf \
+  unzip \
+  mosh \
+  python \
+  python-pip \
+  htop \
+  nnn \
+  --no-install-recommends \
+
+rm -rf /var/lib/apt/lists/*
+
 
 if ! [ -x "$(command -v node)" ]; then
 	export NVM_DIR="$HOME/.nvm" && (
@@ -46,6 +43,9 @@ if ! [ -x "$(command -v node)" ]; then
 	nvm install node
 	npm install -g yarn
 fi
+
+
+# Neovim and Vim Plug
 
 VIM_PLUG_FILE="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f "${VIM_PLUG_FILE}" ]; then
@@ -61,7 +61,7 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/tpope/vim-fugitive"
     git clone "https://github.com/preservim/nerdtree"
     git clone "https://github.com/Xuyuanp/nerdtree-git-plugin"
-	git clone "https://github.com/SirVer/ultisnips"
+    git clone "https://github.com/SirVer/ultisnips"
     git clone "https://github.com/honza/vim-snippets"
     git clone "https://github.com/majutsushi/tagbar"
     git clone "https://github.com/ludovicchabant/vim-gutentags"
@@ -69,62 +69,39 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/prettier/vim-prettier"
 
     git clone "https://github.com/ryanoasis/vim-devicons"
-    git clone "https://github.com/Yggdroot/indentLine"
     git clone "https://github.com/sheerun/vim-polyglot"
     git clone "https://github.com/morhetz/gruvbox"
   popd
 fi
 
-if [ ! -d "${HOME}/.zsh" ]; then
-  echo " ==> Installing zsh plugins"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
-  git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
-  git clone https://github.com/zsh-users/zsh-completions "${HOME}/.zsh/zsh-completions"
+# Oh-my-zsh
+if [ ! -f "${HOME}/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
+# dotfiles
 if [ ! -d "$HOME/dotfiles" ]; then
   echo "==> Setting up dotfiles"
   cd "$HOME"
   git clone --recursive https://github.com/panda622/dotfiles.git
-
-  cd "$HOME/dotfiles"
-  git remote set-url origin git@github.com:panda622/dotfiles.git
-
-  mkdir -p "$HOME/.config/nvim"
-  ln -sfn $(pwd)/.vimrc "${HOME}/.config/nvim/init.vim"
-  ln -sfn $(pwd)/.zshrc "${HOME}/.zshrc"
-  ln -sfn $(pwd)/.tmux.conf "${HOME}/.tmux.conf"
-  ln -sfn $(pwd)/.gitconfig "${HOME}/.gitconfig"
-  ln -sfn $(pwd)/.ctags "${HOME}/.ctags"
 fi
 
-if [ ! -f "/root/secrets/pull-secrets.sh" ]; then
-  echo "==> Creating pull-secret.sh script"
-
-cat > pull-secrets.sh <<'EOF'
-#!/bin/bash
-set -eu
-echo "Authenticating with 1Password"
-export OP_SESSION_my=$(op signin https://my.1password.com bbhn1362@protonmail.com --output=raw)
-echo "Pulling secrets"
-op get document 'ws_rsa' > ws_rsa
-op get document 'zsh_history' > zsh_history
-rm -f ~/.ssh/ws_rsa
-rm -f ~/.zsh_history
-ln -sfn $(pwd)/ws_rsa ~/.ssh/ws_rsa
-ln -sfn $(pwd)/zsh_history ~/.zsh_history
-chmod 0600 ~/.ssh/ws_rsa
-echo "Done!"
-
-echo 'eval "$(ssh-agent -s)"'
-echo 'ssh-add ~/.ssh/ws_rsa'
-EOF
-
-  mkdir -p /root/secrets
-  chmod +x pull-secrets.sh
-  mv pull-secrets.sh ~/secrets
-fi
-
+# Link files
 ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+rm -rf ~/.vimrc
+rm -rf ~/.zshrc
+rm -rf ~/.gitconfig
+rm -rf ~/.ctags
+rm -rf ~/.tmux.conf
+rm -rf ~/.config/nvim
+ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
+ln -sfn ~/dotfiles/UltiSnips "${HOME}/.config/nvim/UltiSnips"
+ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
+ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
+ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
+ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
+
 echo 'tren-may' > /etc/hostname
 chsh -s /bin/zsh
