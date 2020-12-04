@@ -1,4 +1,3 @@
-#!/bin/bash
 # Ref: https://github.com/fatih/dotfiles/blob/master/bootstrap.sh
 set -eu
 
@@ -33,6 +32,7 @@ rm -rf /var/lib/apt/lists/*
 
 # Install npm
 if ! [ -x "$(command -v node)" ]; then
+  echo "==> Setting NVM and NODE"
 	export NVM_DIR="$HOME/.nvm" && (
 	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
 	cd "$NVM_DIR"
@@ -45,13 +45,14 @@ fi
 
 # Install docker
 if ! [ -x "$(command -v docker)" ]; then
+  echo "==> Setting Docker"
   apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg-agent \
     software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  yes Y | curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
   add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -59,9 +60,10 @@ if ! [ -x "$(command -v docker)" ]; then
    stable"
 
   apt-get update
-  apt-get install docker-ce docker-ce-cli containerd.io
+  yes Y | apt-get install docker-ce docker-ce-cli containerd.io
 
   curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
 fi
 
 # Neovim and Vim Plug
@@ -70,31 +72,30 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
   echo " ==> Installing vim plugins"
   curl -fLo ${VIM_PLUG_FILE} --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   mkdir -p "${HOME}/.vim/plugged"
-  pushd "${HOME}/.vim/plugged"
-    git clone "https://github.com/junegunn/fzf"
-    git clone "https://github.com/junegunn/fzf.vim"
-    git clone "https://github.com/tpope/vim-surround"
-    git clone "https://github.com/tpope/vim-repeat"
-    git clone "https://github.com/tpope/vim-commentary"
-    git clone "https://github.com/SirVer/ultisnips"
-    git clone "https://github.com/honza/vim-snippets"
-    git clone "https://github.com/majutsushi/tagbar"
-    git clone "https://github.com/ludovicchabant/vim-gutentags"
-    git clone "https://github.com/mcchrish/nnn.vim"
-    git clone "https://github.com/prettier/vim-prettier"
-    git clone "https://github.com/neoclide/coc.nvim"
-    git clone "https://github.com/tpope/vim-fugitive"
+  git clone "https://github.com/junegunn/fzf"
+  git clone "https://github.com/junegunn/fzf.vim"
+  git clone "https://github.com/tpope/vim-surround"
+  git clone "https://github.com/tpope/vim-repeat"
+  git clone "https://github.com/tpope/vim-commentary"
+  git clone "https://github.com/SirVer/ultisnips"
+  git clone "https://github.com/honza/vim-snippets"
+  git clone "https://github.com/majutsushi/tagbar"
+  git clone "https://github.com/ludovicchabant/vim-gutentags"
+  git clone "https://github.com/mcchrish/nnn.vim"
+  git clone "https://github.com/prettier/vim-prettier"
+  git clone "https://github.com/neoclide/coc.nvim"
+  git clone "https://github.com/tpope/vim-fugitive"
 
-    git clone "https://github.com/ryanoasis/vim-devicons"
-    git clone "https://github.com/sheerun/vim-polyglot"
-    git clone "https://github.com/morhetz/gruvbox"
-  popd
+  git clone "https://github.com/ryanoasis/vim-devicons"
+  git clone "https://github.com/sheerun/vim-polyglot"
+  git clone "https://github.com/morhetz/gruvbox"
 fi
 
 # Oh-my-zsh
 if [ ! -f "${HOME}/.oh-my-zsh" ]; then
-  chsh -s /bin/zsh
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  echo "==> Setting oh-my-zsh"
+  yes Y | chsh -s /bin/zsh
+  yes Y | sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
@@ -107,7 +108,6 @@ if [ ! -f "$HOME/dotfiles" ]; then
 fi
 
 # Link files
-ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
 rm -rf ~/.vimrc
 rm -rf ~/.zshrc
 rm -rf ~/.gitconfig
