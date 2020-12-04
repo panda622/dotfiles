@@ -9,12 +9,12 @@ UPGRADE_PACKAGES=${1:-none}
 if [ "${UPGRADE_PACKAGES}" != "none" ]; then
   echo "==> Updating and upgrading packages ..."
   # Add third party repositories
-  sudo add-apt-repository ppa:keithw/mosh-dev -y
-  sudo apt-get update
-  sudo apt-get upgrade -y
+  add-apt-repository ppa:keithw/mosh-dev -y
+  apt-get update
+  apt-get upgrade -y
 fi
 
-sudo apt-get install -qq \
+apt-get install -qq \
   git \
   ctags \
   zsh \
@@ -24,8 +24,6 @@ sudo apt-get install -qq \
   fzf \
   unzip \
   mosh \
-  python \
-  python-pip \
   htop \
   nnn \
   --no-install-recommends \
@@ -33,6 +31,7 @@ sudo apt-get install -qq \
 rm -rf /var/lib/apt/lists/*
 
 
+# Install npm
 if ! [ -x "$(command -v node)" ]; then
 	export NVM_DIR="$HOME/.nvm" && (
 	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
@@ -44,9 +43,28 @@ if ! [ -x "$(command -v node)" ]; then
 	npm install -g yarn
 fi
 
+# Install docker
+if ! [ -x "$(command -v docker)" ]; then
+  apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+  add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+  apt-get update
+  apt-get install docker-ce docker-ce-cli containerd.io
+
+  curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+fi
 
 # Neovim and Vim Plug
-
 VIM_PLUG_FILE="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f "${VIM_PLUG_FILE}" ]; then
   echo " ==> Installing vim plugins"
@@ -58,15 +76,14 @@ if [ ! -f "${VIM_PLUG_FILE}" ]; then
     git clone "https://github.com/tpope/vim-surround"
     git clone "https://github.com/tpope/vim-repeat"
     git clone "https://github.com/tpope/vim-commentary"
-    git clone "https://github.com/tpope/vim-fugitive"
-    git clone "https://github.com/preservim/nerdtree"
-    git clone "https://github.com/Xuyuanp/nerdtree-git-plugin"
     git clone "https://github.com/SirVer/ultisnips"
     git clone "https://github.com/honza/vim-snippets"
     git clone "https://github.com/majutsushi/tagbar"
     git clone "https://github.com/ludovicchabant/vim-gutentags"
     git clone "https://github.com/mcchrish/nnn.vim"
     git clone "https://github.com/prettier/vim-prettier"
+    git clone "https://github.com/neoclide/coc.nvim"
+    git clone "https://github.com/tpope/vim-fugitive"
 
     git clone "https://github.com/ryanoasis/vim-devicons"
     git clone "https://github.com/sheerun/vim-polyglot"
@@ -76,13 +93,14 @@ fi
 
 # Oh-my-zsh
 if [ ! -f "${HOME}/.oh-my-zsh" ]; then
+  chsh -s /bin/zsh
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
 # dotfiles
-if [ ! -d "$HOME/dotfiles" ]; then
+if [ ! -f "$HOME/dotfiles" ]; then
   echo "==> Setting up dotfiles"
   cd "$HOME"
   git clone --recursive https://github.com/panda622/dotfiles.git
@@ -104,4 +122,3 @@ ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
 ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
 
 echo 'tren-may' > /etc/hostname
-chsh -s /bin/zsh

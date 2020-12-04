@@ -22,3 +22,5 @@ source ~/dotfiles/alias.sh
 
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"

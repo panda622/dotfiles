@@ -1,17 +1,28 @@
 variable "root_pass" {}
-variable "token" {}
-variable "thinkpad_keys" {}
+variable "linode_token" {}
+variable "id_linode_pub" {}
+
+terraform {
+  required_providers {
+    linode = {
+      source = "linode/linode"
+      version = "1.13.4"
+    }
+  }
+}
+
+
 provider "linode" {
-	token = var.token
+	linode_token = var.linode_token
 }
 
 resource "linode_instance" "dev" {
-	label = "dev-machine"
-	image = "linode/arch"
+	label = "base"
+	image = "linode/ubuntu20.04"
 	group = "sudo"
 	region = "ap-south"
 	type = "g6-nanode-1"
-	authorized_keys = [var.thinkpad_keys]
+	authorized_keys = [var.id_linode_pub]
 
 	provisioner "file" {
 		source      = "setup.sh"
@@ -20,7 +31,7 @@ resource "linode_instance" "dev" {
 		connection {
 			type        = "ssh"
 			user        = "root"
-			private_key = file("~/.ssh/id_rsa")
+			private_key = file("~/.ssh/id_linode")
 			host        = self.ip_address
 		}
 	}
@@ -34,12 +45,12 @@ resource "linode_instance" "dev" {
 		connection {
 			type        = "ssh"
 			user        = "root"
-			private_key = file("~/.ssh/id_rsa")
+			private_key = file("~/.ssh/id_linode")
 			host        = self.ip_address
 		}
 	}
 }
 
 output "public_ip" {
-  value = "${linode_instance.dev.ip_address}"
+  value = linode_instance.dev.ip_address
 }
