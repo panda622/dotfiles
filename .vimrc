@@ -27,9 +27,9 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-set colorcolumn=80
+" set colorcolumn=80
 " colors default
-colors xcodelighthc
+colors default
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript

@@ -12,7 +12,7 @@ export PATH="$PATH:$HOME/Documents/flutter/bin"
 
 # Config
 ZSH_THEME="steeef"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting rails)
 source $ZSH/oh-my-zsh.sh
 source ~/dotfiles/alias.sh
 

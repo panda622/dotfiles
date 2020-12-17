@@ -113,7 +113,6 @@ rm -rf ~/.zshrc
 rm -rf ~/.gitconfig
 rm -rf ~/.ctags
 rm -rf ~/.tmux.conf
-rm -rf ~/.config/nvim
 ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
 ln -sfn ~/dotfiles/UltiSnips "${HOME}/.config/nvim/UltiSnips"
 ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
