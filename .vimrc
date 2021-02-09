@@ -1,3 +1,8 @@
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
 call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -6,7 +11,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-fugitive'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'prettier/vim-prettier'
+  Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/0.x'
+  \ }
+  Plug 'preservim/nerdtree'
   Plug 'majutsushi/tagbar'
   Plug 'mcchrish/nnn.vim'
   Plug 'ludovicchabant/vim-gutentags'
@@ -15,6 +24,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'arzg/vim-colors-xcode'
   Plug 'dart-lang/dart-vim-plugin'
   Plug 'SirVer/ultisnips'
+  Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' }
 call plug#end()
 
 syntax on
@@ -22,14 +32,14 @@ filetype plugin indent on
 set number
 set wildmenu wildmode=longest:full,full
 set list listchars=tab:»\ ,trail:•
-set autoindent expandtab
+set autoindent expandtab smarttab
 set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
 " set colorcolumn=80
 " colors default
-colors default
+colors gruvbox
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
@@ -49,7 +59,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> <Leader>z :CocFix<CR>
-nmap <leader>e :NnnPicker '%:p:h'<CR>
+nmap <leader>e :NnnPicker %:p:h<CR>
 nmap <C-t> :TagbarToggle<CR>
 nmap <Leader>p :FZF<CR>
 nmap <Leader>b :Buffers<CR>
@@ -124,3 +134,10 @@ autocmd FileChangedShellPost *
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
+
+" Nerdtree
+nnoremap <C-e> :NERDTreeFind<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+nnoremap <silent> <leader>lg :LazyGit<CR>
+nnoremap <silent> <Leader>' :call openterm#horizontal('lazygit', 0.8)<CR>

@@ -1,4 +1,3 @@
-variable "root_pass" {}
 variable "linode_token" {}
 variable "id_linode_pub" {}
 

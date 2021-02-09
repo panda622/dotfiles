@@ -7,6 +7,7 @@ alias vimrc='nvim ~/dotfiles/.vimrc'
 alias zshrc='nvim ~/dotfiles/.zshrc'
 alias bashrc='nvim ~/.bashrc'
 alias tmc="nvim ~/dotfiles/.tmux.conf"
+alias lg="lazygit"
 
 alias tml="tmux list-sessions"
 alias tmn="tmux -2 -u new -s $1"
@@ -17,6 +18,7 @@ alias tmd="tmux kill-server"
 alias dcc="docker container"
 alias di="docker images"
 alias dc="docker-compose"
+alias dls="docker ps"
 
 case `uname` in
   Darwin)
@@ -34,5 +36,6 @@ case `uname` in
     ;;
 esac
 alias plisten="sudo lsof -i -P -n | grep LISTEN"
-alias activenet='sudo route add -net 10.91.9.0/24 gw 10.91.16.65 & sudo route add -net 172.29.0.0/16 gw 10.91.16.65 & sudo route add -net 192.168.0.0/16 gw 10.91.16.65'
+alias activenet='sudo route add -net 10.91.9.0/24 gw 10.91.16.65 & sudo route add -net 172.29.0.0/16 gw 10.91.16.65 & sudo route add -net 192.168.0.0/16 gw 10.91.16.65 & sudo route add -net 192.168.155.0/24 gw 10.91.16.65'
 alias vpn='cd /home/cimb/programs/anyconnect-linux64-4.9.01095/vpn && sudo ./vpnui &'
+alias lzd='lazydocker'
