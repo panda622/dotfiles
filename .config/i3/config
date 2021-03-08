@@ -27,7 +27,6 @@ bindsym $mod+Shift+t	gaps outer current minus 5
 exec_always --no-startup-id feh --bg-fill ~/Pictures/smail.png
 exec_always --no-startup-id xautolock -time 15 -locker "betterlockscreen -l"
 exec_always --no-startup-id dunst
-# exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id setxkbmap dvp -option "ctrl:nocaps"
 exec_always --no-startup-id xset r rate 250 40
 exec_always --no-startup-id xinput set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.45

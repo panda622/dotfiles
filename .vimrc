@@ -21,10 +21,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'
   Plug 'morhetz/gruvbox'
-  Plug 'arzg/vim-colors-xcode'
-  Plug 'dart-lang/dart-vim-plugin'
   Plug 'SirVer/ultisnips'
-  Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' }
 call plug#end()
 
 syntax on
@@ -37,8 +34,6 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-" set colorcolumn=80
-" colors default
 colors gruvbox
 
 " Filetype
@@ -139,5 +134,4 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 nnoremap <C-e> :NERDTreeFind<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 
-nnoremap <silent> <leader>lg :LazyGit<CR>
-nnoremap <silent> <Leader>' :call openterm#horizontal('lazygit', 0.8)<CR>
+let g:gruvbox_contrast_dark="hard"
