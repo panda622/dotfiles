@@ -6,6 +6,8 @@ endif
 call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-endwise'
+    Plug 'tpope/vim-rails'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
@@ -15,18 +17,14 @@ call plug#begin('~/.vim/plugged')
   \ 'do': 'yarn install',
   \ 'branch': 'release/0.x'
   \ }
-  Plug 'preservim/nerdtree'
   Plug 'majutsushi/tagbar'
   Plug 'mcchrish/nnn.vim'
   Plug 'ludovicchabant/vim-gutentags'
-  Plug 'sheerun/vim-polyglot'
-  Plug 'morhetz/gruvbox'
-  Plug 'SirVer/ultisnips'
+  " Plug 'sheerun/vim-polyglot'
 call plug#end()
 
-syntax on
 filetype plugin indent on
-set number
+" set number
 set wildmenu wildmode=longest:full,full
 set list listchars=tab:»\ ,trail:•
 set autoindent expandtab smarttab
@@ -34,7 +32,8 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-colors gruvbox
+syntax off
+set t_Co=0
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
@@ -70,7 +69,11 @@ nmap # #n
 nmap Q <NOP>
 
 " Gutentags
-let g:gutentags_cache_dir = "~/.ctags_cache_dir"
+let g:gutentags_cache_dir = expand('~/.ctags_cache_dir')
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
 
 " Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden', <bang>0)
@@ -120,18 +123,8 @@ endif
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
 " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-set autoread 
+set autoread
 " Notification after file change
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-
-" UltiSnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-
-" Nerdtree
-nnoremap <C-e> :NERDTreeFind<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
-
-let g:gruvbox_contrast_dark="hard"

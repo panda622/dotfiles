@@ -6,9 +6,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/myscript:${PATH}"
 export PATH="$HOME/myscript/dev-gen:${PATH}"
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$HOME/.gem/ruby/2.7.0/bin:${PATH}"
 export PATH="$PATH:$HOME/Documents/flutter/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
 
 # Config
 ZSH_THEME="steeef"
@@ -22,5 +21,7 @@ source ~/dotfiles/alias.sh
 
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
