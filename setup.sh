@@ -33,6 +33,7 @@ rm -rf ~/.gitconfig
 rm -rf ~/.ctags
 rm -rf ~/.tmux.conf
 rm -rf ~/.config/nvim
+rm -rf ~/.agignore
 
 mkdir -p "${HOME}/.config/nvim"
 
@@ -42,3 +43,4 @@ ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
 ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
 ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
 ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
+ln -sfn ~/dotfiles/.agignore "${HOME}/.agignore"
