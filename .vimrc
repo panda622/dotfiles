@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-endwise'
-    Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-rails'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
@@ -20,7 +20,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'majutsushi/tagbar'
   Plug 'mcchrish/nnn.vim'
   Plug 'ludovicchabant/vim-gutentags'
-  " Plug 'sheerun/vim-polyglot'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'morhetz/gruvbox'
 call plug#end()
 
 filetype plugin indent on
@@ -32,8 +33,9 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-syntax off
-set t_Co=0
+syntax on
+set t_Co=256
+colors gruvbox
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
@@ -67,6 +69,12 @@ nmap N Nzz
 nmap * *N
 nmap # #n
 nmap Q <NOP>
+nnoremap H ^
+nnoremap L $
+vnoremap H ^
+vnoremap L g_
+" Act like D and C
+nnoremap Y y$
 
 " Gutentags
 let g:gutentags_cache_dir = expand('~/.ctags_cache_dir')
@@ -128,3 +136,21 @@ set autoread
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
