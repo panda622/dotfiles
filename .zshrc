@@ -8,6 +8,7 @@ export PATH="$HOME/myscript:${PATH}"
 export PATH="$HOME/myscript/dev-gen:${PATH}"
 export PATH="$PATH:$HOME/Documents/flutter/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH=~/.local/bin:$PATH
 
 # Config
 ZSH_THEME="steeef"

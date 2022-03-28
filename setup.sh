@@ -1,10 +1,24 @@
 #!/bin/bash
 
-sudo pacman -S --noconfirm docker docker-compose fzf neovim tmux git ctags the_silver_searcher mosh htop nnn unzip
+sudo pacman -S --noconfirm zsh docker docker-compose fzf neovim tmux git ctags the_silver_searcher mosh htop nnn unzip rclone lazygit
+sudo pacman -S --needed base-devel git wget yajl
 
+# Docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo systemctl enable docker.service
+
+# Yaourt
+
+if ! [-x "$(command yaourt)"]; then
+	cd /tmp
+	git clone https://aur.archlinux.org/package-query.git
+	cd package-query/
+	makepkg -si && cd /tmp/
+	git clone https://aur.archlinux.org/yaourt.git
+	cd yaourt/
+	makepkg -si
+fi
 
 # Nvm
 if ! [ -x "$(command -v node)" ]; then
