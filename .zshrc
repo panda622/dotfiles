@@ -22,7 +22,7 @@ source ~/dotfiles/alias.sh
 
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
-# export PATH="$HOME/.rbenv/bin:$PATH"
-# eval "$(rbenv init -)"
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+eval "$(rbenv init -)"
