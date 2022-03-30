@@ -31,6 +31,7 @@ sudo apt-get install -q -y \
   libcurl4-openssl-dev \
   software-properties-common \
   libffi-dev \
+  default-libmysqlclient-dev \
   curl \
   docker.io \
   docker-compose  \
