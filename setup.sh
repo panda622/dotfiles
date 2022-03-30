@@ -1,8 +1,21 @@
 #!/bin/bash
 set -eu
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get update
-sudo apt-get upgrade -y
+UPGRADE_PACKAGES=$1
+
+# Mount Volume
+mkdir /mnt/blockstorage
+echo >> /etc/fstab
+echo /dev/sda               /mnt/blockstorage       ext4    defaults,noatime,nofail 0 0 >> /etc/fstab
+mount /mnt/blockstorage
+mkdir -p /mnt/blockstorage/user
+useradd -d /mnt/blockstorage/user -g admin dev
+export HOME=/mnt/blockstorage/user
+
+if [ "${UPGRADE_PACKAGES:-none}" != "none" ]; then
+  sudo apt-get update
+  sudo apt-get upgrade -y
+fi
 
 sudo apt-get install -q -y \
   git-core \
@@ -36,18 +49,18 @@ sudo apt-get install -q -y \
   zsh \
   unzip \
   --no-install-recommends
-  sudo rm -rf /var/lib/apt/lists/*
+sudo rm -rf /var/lib/apt/lists/*
 
-if ! [ -x "$(command -v lazygit)" ]; then
-  sudo add-apt-repository ppa:lazygit-team/release
-  sudo apt-get update
-  sudo apt-get install -q -y lazygit
-fi
+# if ! [ -x "$(command -v lazygit)" ]; then
+#   sudo add-apt-repository -y ppa:lazygit-team/release
+#   sudo apt-get update
+#   sudo apt-get install -q -y lazygit
+# fi
 
-if ! [ -x "$(command -v psql)" ]; then
-  sudo apt-get update
-  sudo apt install -q -y postgresql-11 libpq-dev
-fi
+# if ! [ -x "$(command -v psql)" ]; then
+#   sudo apt-get update
+#   sudo apt install -q -y postgresql-11 libpq-dev
+# fi
 
 if [ ! -d "${HOME}/.fzf" ]; then
   echo " ==> Installing fzf"
@@ -71,21 +84,10 @@ if [ ! -d "${HOME}/.rbenv" ]; then
 
   git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   exec $SHELL
-
-  rbenv install 3.0.3
-  rbenv global 3.0.3
-  gem install bundler
-  rbenv rehash
 fi
 
 if [ ! -d "${HOME}/.rbenv/plugins" ]; then
   git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  exec $SHELL
-
-  rbenv install 3.0.3
-  rbenv global 3.0.3
-  gem install bundler
-  rbenv rehash
 fi
 
 ## Nvm
@@ -110,26 +112,37 @@ if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
-rm -rf ~/.vimrc
-rm -rf ~/.zshrc
-rm -rf ~/.gitconfig
-rm -rf ~/.ctags
-rm -rf ~/.tmux.conf
-rm -rf ~/.config/nvim
-rm -rf ~/.agignore
+if [ ! -d "${HOME}/dotfiles" ]; then
+  rm -rf ~/.vimrc
+  rm -rf ~/.zshrc
+  rm -rf ~/.gitconfig
+  rm -rf ~/.ctags
+  rm -rf ~/.tmux.conf
+  rm -rf ~/.config/nvim
+  rm -rf ~/.agignore
 
-mkdir -p "${HOME}/.config/nvim"
+  cd $HOME
+  git clone --recursive https://github.com/panda622/dotfiles.git
+  cd "${HOME}/dotfiles"
+  git remote set-url origin git@github.com:panda622/dotfiles.git
 
-ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
-ln -sfn ~/dotfiles/UltiSnips "${HOME}/.config/nvim/UltiSnips"
-ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
-ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
-ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
-ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
-ln -sfn ~/dotfiles/.agignore "${HOME}/.agignore"
+  mkdir -p "${HOME}/.config/nvim"
+  ln -sfn ~/dotfiles/.vimrc "${HOME}/.config/nvim/init.vim"
+  ln -sfn ~/dotfiles/UltiSnips "${HOME}/.config/nvim/UltiSnips"
+  ln -sfn ~/dotfiles/.zshrc "${HOME}/.zshrc"
+  ln -sfn ~/dotfiles/.tmux.conf "${HOME}/.tmux.conf"
+  ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
+  ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
+  ln -sfn ~/dotfiles/.agignore "${HOME}/.agignore"
+fi
 
 echo "==> Setting shell to zsh..."
 chsh -s /usr/bin/zsh
 
-echo ""
+# Copy sshkey
+if [ ! -d "${HOME}/.ssh" ]; then
+  mkdir -p "${HOME}/.ssh"
+  cp /root/.ssh/authorized_keys "${HOME}/.ssh/"
+fi
+sudo chown -R dev:admin /mnt/blockstorage
 echo "=> Done!"
