@@ -3,18 +3,20 @@ set -eu
 export DEBIAN_FRONTEND=noninteractive
 UPGRADE_PACKAGES=$1
 
-# Mount Volume
-mkdir /mnt/blockstorage
-echo >> /etc/fstab
-echo /dev/sda               /mnt/blockstorage       ext4    defaults,noatime,nofail 0 0 >> /etc/fstab
-mount /mnt/blockstorage
-mkdir -p /mnt/blockstorage/user
-useradd -d /mnt/blockstorage/user -g admin dev
 export HOME=/mnt/blockstorage/user
 
-if [ "${UPGRADE_PACKAGES:-none}" != "none" ]; then
+if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
+  sudo timedatectl set-timezone Asia/Ho_Chi_Minh
   sudo apt-get update
   sudo apt-get upgrade -y
+
+  # Mount Volume
+  mkdir -p /mnt/blockstorage
+  echo >> /etc/fstab
+  echo /dev/sda               /mnt/blockstorage       ext4    defaults,noatime,nofail 0 0 >> /etc/fstab
+  mount /mnt/blockstorage
+  mkdir -p /mnt/blockstorage/user
+  useradd -d /mnt/blockstorage/user -g admin dev
 fi
 
 sudo apt-get install -q -y \
@@ -51,16 +53,22 @@ sudo apt-get install -q -y \
   --no-install-recommends
 sudo rm -rf /var/lib/apt/lists/*
 
-# if ! [ -x "$(command -v lazygit)" ]; then
-#   sudo add-apt-repository -y ppa:lazygit-team/release
-#   sudo apt-get update
-#   sudo apt-get install -q -y lazygit
-# fi
+if ! [ -x "$(command -v lazygit)" ]; then
+  sudo add-apt-repository -y ppa:lazygit-team/release
+  sudo apt-get update
+  sudo apt-get install -q -y lazygit
+fi
 
-# if ! [ -x "$(command -v psql)" ]; then
-#   sudo apt-get update
-#   sudo apt install -q -y postgresql-11 libpq-dev
-# fi
+if ! [ -x "$(command -v psql)" ]; then
+  sudo apt-get update
+  sudo apt install -q -y postgresql postgresql-contrib
+fi
+
+if ! [ -x "$(command -v mysql)" ]; then
+  sudo apt-get update
+  sudo apt install -q -y mariadb-server
+  # sudo systemctl start mariadb-server
+fi
 
 if [ ! -d "${HOME}/.fzf" ]; then
   echo " ==> Installing fzf"
@@ -73,9 +81,10 @@ fi
 
 
 # Docker
-#sudo groupadd docker
-#sudo usermod -aG docker $USER
-#sudo systemctl enable docker.service
+if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
+  sudo usermod -aG docker dev
+  sudo systemctl enable --now docker.service
+fi
 
 ## Rbenv
 if [ ! -d "${HOME}/.rbenv" ]; then
