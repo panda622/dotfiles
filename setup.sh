@@ -32,6 +32,7 @@ sudo apt-get install -q -y \
   software-properties-common \
   libffi-dev \
   default-libmysqlclient-dev \
+  libpq-dev\
   curl \
   docker.io \
   docker-compose  \
@@ -50,6 +51,7 @@ sudo apt-get install -q -y \
   rclone \
   neovim \
   zsh \
+  fail2ban \
   unzip \
   --no-install-recommends
 sudo rm -rf /var/lib/apt/lists/*
@@ -71,6 +73,17 @@ if ! [ -x "$(command -v mysql)" ]; then
   # sudo systemctl start mariadb-server
 fi
 
+if ! [ -x "$(command -v aws)" ]; then
+   python3 -m pip install awscli
+fi
+
+if ! [ -d "${HOME}/.ebcli-virtual-env" ]; then
+  cd /tmp
+  git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
+  python3 install virtualenv
+  python3 ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
+fi
+
 if [ ! -d "${HOME}/.fzf" ]; then
   echo " ==> Installing fzf"
   git clone https://github.com/junegunn/fzf "${HOME}/.fzf"
@@ -89,15 +102,11 @@ fi
 
 ## Rbenv
 if [ ! -d "${HOME}/.rbenv" ]; then
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  exec $SHELL
-
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  exec $SHELL
+  git clone https://github.com/rbenv/rbenv.git "${HOME}/.rbenv"
 fi
 
 if [ ! -d "${HOME}/.rbenv/plugins" ]; then
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git clone https://github.com/rbenv/ruby-build.git "${HOME}/.rbenv/plugins/ruby-build"
 fi
 
 ## Nvm
