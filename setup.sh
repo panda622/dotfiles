@@ -6,6 +6,8 @@ UPGRADE_PACKAGES=$1
 export HOME=/mnt/blockstorage/user
 
 if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
+  sudo add-apt-repository -y ppa:lazygit-team/release
+
   sudo timedatectl set-timezone Asia/Ho_Chi_Minh
   sudo apt-get update
   sudo apt-get upgrade -y
@@ -57,7 +59,6 @@ sudo apt-get install -q -y \
 sudo rm -rf /var/lib/apt/lists/*
 
 if ! [ -x "$(command -v lazygit)" ]; then
-  sudo add-apt-repository -y ppa:lazygit-team/release
   sudo apt-get update
   sudo apt-get install -q -y lazygit
 fi
@@ -70,7 +71,7 @@ fi
 if ! [ -x "$(command -v mysql)" ]; then
   sudo apt-get update
   sudo apt install -q -y mariadb-server
-  # sudo systemctl start mariadb-server
+  # sudo systemctl stop mariadb-server
 fi
 
 if ! [ -x "$(command -v aws)" ]; then
@@ -153,6 +154,9 @@ if [ ! -d "${HOME}/dotfiles" ]; then
   ln -sfn ~/dotfiles/.gitconfig "${HOME}/.gitconfig"
   ln -sfn ~/dotfiles/.ctags "${HOME}/.ctags"
   ln -sfn ~/dotfiles/.agignore "${HOME}/.agignore"
+
+  touch /etc/fail2ban/jail.d/sshd.local
+  ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
 fi
 
 echo "==> Setting shell to zsh..."

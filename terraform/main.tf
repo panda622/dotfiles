@@ -31,7 +31,7 @@ resource "digitalocean_volume" "dev" {
 resource "digitalocean_droplet" "dev" {
   name               = "dev"
   image              = "ubuntu-20-04-x64"
-  size               = "s-2vcpu-4gb"
+  size               = "s-4vcpu-8gb"
   region             = "${var.region}"
   backups            = false
   ipv6               = false
