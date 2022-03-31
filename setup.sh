@@ -168,4 +168,6 @@ if [ ! -d "${HOME}/.ssh" ]; then
   cp /root/.ssh/authorized_keys "${HOME}/.ssh/"
 fi
 sudo chown -R dev:admin /mnt/blockstorage
+
+echo 'dev ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
 echo "=> Done!"

@@ -28,8 +28,8 @@ resource "digitalocean_volume" "dev" {
   }
 }
 
-resource "digitalocean_droplet" "dev" {
-  name               = "dev"
+resource "digitalocean_droplet" "cloud" {
+  name               = "cloud"
   image              = "ubuntu-20-04-x64"
   size               = "s-4vcpu-8gb"
   region             = "${var.region}"
@@ -43,7 +43,7 @@ resource "digitalocean_droplet" "dev" {
     destination = "/tmp/setup.sh"
 
     connection {
-      host        =  "${digitalocean_droplet.dev.ipv4_address}"
+      host        =  "${digitalocean_droplet.cloud.ipv4_address}"
       type        = "ssh"
       private_key = "${file("~/.ssh/id_rsa")}"
       user        = "root"
@@ -59,7 +59,7 @@ resource "digitalocean_droplet" "dev" {
 
     connection {
       type        = "ssh"
-      host        =  "${digitalocean_droplet.dev.ipv4_address}"
+      host        =  "${digitalocean_droplet.cloud.ipv4_address}"
       private_key = "${file("~/.ssh/id_rsa")}"
       user        = "root"
       timeout     = "10m"
@@ -70,7 +70,7 @@ resource "digitalocean_droplet" "dev" {
 resource "digitalocean_firewall" "dev" {
   name = "dev"
 
-  droplet_ids = ["${digitalocean_droplet.dev.id}"]
+  droplet_ids = ["${digitalocean_droplet.cloud.id}"]
 
   inbound_rule {
       protocol         = "udp"
@@ -102,6 +102,6 @@ resource "digitalocean_firewall" "dev" {
 }
 
 output "public_ip" {
-  value = "${digitalocean_droplet.dev.ipv4_address}"
+  value = "${digitalocean_droplet.cloud.ipv4_address}"
 }
 
