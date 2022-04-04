@@ -63,16 +63,15 @@ if ! [ -x "$(command -v lazygit)" ]; then
   sudo apt-get install -q -y lazygit
 fi
 
-# if ! [ -x "$(command -v psql)" ]; then
-#   sudo apt-get update
-#   sudo apt install -q -y postgresql postgresql-contrib
-# fi
+if ! [ -x "$(command -v psql)" ]; then
+  sudo apt-get update
+  sudo apt install -q -y postgresql postgresql-contrib
+fi
 
-# if ! [ -x "$(command -v mysql)" ]; then
-#   sudo apt-get update
-#   sudo apt install -q -y mariadb-server
-#   # sudo systemctl start mariadb-server
-# fi
+if ! [ -x "$(command -v mysql)" ]; then
+  sudo apt-get update
+  sudo apt install -q -y mariadb-server
+fi
 
 if ! [ -x "$(command -v aws)" ]; then
    python3 -m pip install awscli
@@ -94,12 +93,6 @@ if [ ! -d "${HOME}/.fzf" ]; then
   popd
 fi
 
-
-# Docker
-if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
-  sudo usermod -aG docker dev
-  sudo systemctl enable --now docker.service
-fi
 
 ## Rbenv
 if [ ! -d "${HOME}/.rbenv" ]; then
@@ -169,5 +162,18 @@ if [ ! -d "${HOME}/.ssh" ]; then
 fi
 sudo chown -R dev:admin /mnt/blockstorage
 
-echo 'dev ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
+# Docker
+if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
+  echo 'dev ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+  sudo usermod -aG docker dev
+  sudo systemctl enable --now docker.service
+
+  touch /etc/fail2ban/jail.d/sshd.local
+  ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
+
+  sudo systemctl restart fail2ban.service
+  sudo systemctl stop mysql.service
+fi
+
 echo "=> Done!"
