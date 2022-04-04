@@ -63,16 +63,16 @@ if ! [ -x "$(command -v lazygit)" ]; then
   sudo apt-get install -q -y lazygit
 fi
 
-if ! [ -x "$(command -v psql)" ]; then
-  sudo apt-get update
-  sudo apt install -q -y postgresql postgresql-contrib
-fi
+# if ! [ -x "$(command -v psql)" ]; then
+#   sudo apt-get update
+#   sudo apt install -q -y postgresql postgresql-contrib
+# fi
 
-if ! [ -x "$(command -v mysql)" ]; then
-  sudo apt-get update
-  sudo apt install -q -y mariadb-server
-  # sudo systemctl stop mariadb-server
-fi
+# if ! [ -x "$(command -v mysql)" ]; then
+#   sudo apt-get update
+#   sudo apt install -q -y mariadb-server
+#   # sudo systemctl start mariadb-server
+# fi
 
 if ! [ -x "$(command -v aws)" ]; then
    python3 -m pip install awscli
