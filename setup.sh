@@ -55,6 +55,7 @@ sudo apt-get install -q -y \
   zsh \
   fail2ban \
   unzip \
+  xclip \
   --no-install-recommends
 sudo rm -rf /var/lib/apt/lists/*
 
