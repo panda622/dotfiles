@@ -174,6 +174,7 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
 
   sudo systemctl restart fail2ban.service
   sudo systemctl stop mysql.service
+  sudo systemctl stop postgresql.service
 fi
 
 echo "=> Done!"
