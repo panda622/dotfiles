@@ -54,6 +54,7 @@ sudo apt-get install -q -y \
   neovim \
   zsh \
   fail2ban \
+  fzf \
   unzip \
   --no-install-recommends
 sudo rm -rf /var/lib/apt/lists/*
@@ -83,16 +84,6 @@ if ! [ -d "${HOME}/.ebcli-virtual-env" ]; then
   python3 install virtualenv
   python3 ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
 fi
-
-if [ ! -d "${HOME}/.fzf" ]; then
-  echo " ==> Installing fzf"
-  git clone https://github.com/junegunn/fzf "${HOME}/.fzf"
-  pushd "${HOME}/.fzf"
-  git remote set-url origin git@github.com:junegunn/fzf.git
-  ${HOME}/.fzf/install --bin --no-bash --no-zsh --no-fish
-  popd
-fi
-
 
 ## Rbenv
 if [ ! -d "${HOME}/.rbenv" ]; then
