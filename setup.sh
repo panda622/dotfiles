@@ -56,6 +56,7 @@ sudo apt-get install -q -y \
   fail2ban \
   fzf \
   unzip \
+  xclip \
   --no-install-recommends
 sudo rm -rf /var/lib/apt/lists/*
 
@@ -165,6 +166,7 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
 
   sudo systemctl restart fail2ban.service
   sudo systemctl stop mysql.service
+  sudo systemctl stop postgresql.service
 fi
 
 echo "=> Done!"
