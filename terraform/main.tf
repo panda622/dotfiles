@@ -31,12 +31,12 @@ variable "region" {
 
 resource "digitalocean_droplet" "cloud" {
   name               = "cloud"
-  image              = "fedora-36-x64"
-  size               = "s-1vcpu-1gb"
+  image              = "fedora-34-x64"
+  size               = "c-4"
   region             = "${var.region}"
   backups            = false
   ipv6               = false
-  ssh_keys           = [34022586]                        # doctl compute ssh-key list
+  ssh_keys           = [34022586, 34772895]                        # doctl compute ssh-key list
   volume_ids         = ["3b4ea89c-afd7-11ec-9a06-0a58ac14a124"]
 
   provisioner "file" {

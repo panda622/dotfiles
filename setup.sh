@@ -45,6 +45,7 @@ sudo dnf install -y \
   unzip \
   xclip \
 # sudo rm -rf /var/lib/apt/lists/*
+sudo yum groupinstall "Development Tools" -y
 
 if ! [ -x "$(command -v lazygit)" ]; then
   sudo dnf copr enable atim/lazygit -y
@@ -121,7 +122,7 @@ if [ ! -d "${HOME}/dotfiles" ]; then
 fi
 
 echo "==> Setting shell to zsh..."
-chsh -s /usr/bin/zsh
+chsh -s /bin/zsh dev
 
 # Copy sshkey
 if [ ! -d "${HOME}/.ssh" ]; then
@@ -137,6 +138,7 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   sudo groupadd -f docker
   sudo usermod -aG docker dev
   sudo systemctl enable --now docker.service
+  chcon -Rt svirt_sandbox_file_t /mnt/blockstorage/docker
 
   touch /etc/fail2ban/jail.d/sshd.local
   ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
