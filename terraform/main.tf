@@ -16,27 +16,28 @@ variable "region" {
   default = "sgp1"
 }
 
-resource "digitalocean_volume" "dev" {
-  name                    = "dev"
-  region                  = "${var.region}"
-  size                    = 20
-  initial_filesystem_type = "ext4"
-  description             = "volume for dev"
+#resource "digitalocean_volume" "dev" {
+#  #id 3b4ea89c-afd7-11ec-9a06-0a58ac14a124
+#  name                    = "dev"
+#  region                  = "${var.region}"
+#  size                    = 20
+#  initial_filesystem_type = "ext4"
+#  description             = "volume for dev"
 
-  lifecycle {
-    prevent_destroy = true
-  }
-}
+#  lifecycle {
+#    prevent_destroy = true
+#  }
+#}
 
 resource "digitalocean_droplet" "cloud" {
   name               = "cloud"
-  image              = "ubuntu-20-04-x64"
-  size               = "s-4vcpu-8gb"
+  image              = "fedora-36-x64"
+  size               = "s-1vcpu-1gb"
   region             = "${var.region}"
   backups            = false
   ipv6               = false
   ssh_keys           = [34022586]                        # doctl compute ssh-key list
-  volume_ids         = ["${digitalocean_volume.dev.id}"]
+  volume_ids         = ["3b4ea89c-afd7-11ec-9a06-0a58ac14a124"]
 
   provisioner "file" {
     source      = "../setup.sh"

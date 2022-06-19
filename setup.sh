@@ -6,11 +6,9 @@ UPGRADE_PACKAGES=$1
 export HOME=/mnt/blockstorage/user
 
 if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
-  sudo add-apt-repository -y ppa:lazygit-team/release
 
   sudo timedatectl set-timezone Asia/Ho_Chi_Minh
-  sudo apt-get update
-  sudo apt-get upgrade -y
+  # sudo dnf update -y
 
   # Mount Volume
   mkdir -p /mnt/blockstorage
@@ -18,25 +16,14 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   echo /dev/sda               /mnt/blockstorage       ext4    defaults,noatime,nofail 0 0 >> /etc/fstab
   mount /mnt/blockstorage
   mkdir -p /mnt/blockstorage/user
-  useradd -d /mnt/blockstorage/user -g admin dev
+  useradd -d /mnt/blockstorage/user -g wheel dev
 fi
 
-sudo apt-get install -q -y \
+sudo dnf install -y \
+  util-linux-user \
   git-core \
-  zlib1g-dev \
-  build-essential \
-  libssl-dev \
-  libreadline-dev \
-  libyaml-dev \
-  libxml2-dev \
-  libxslt1-dev \
-  libcurl4-openssl-dev \
-  software-properties-common \
-  libffi-dev \
-  default-libmysqlclient-dev \
-  libpq-dev\
   curl \
-  docker.io \
+  docker  \
   docker-compose  \
   git \
   jq \
@@ -46,7 +33,7 @@ sudo apt-get install -q -y \
   python \
   python3 \
   python3-pip \
-  silversearcher-ag \
+  the_silver_searcher \
   tmux \
   ctags \
   nnn \
@@ -57,22 +44,11 @@ sudo apt-get install -q -y \
   fzf \
   unzip \
   xclip \
-  --no-install-recommends
-sudo rm -rf /var/lib/apt/lists/*
+# sudo rm -rf /var/lib/apt/lists/*
 
 if ! [ -x "$(command -v lazygit)" ]; then
-  sudo apt-get update
-  sudo apt-get install -q -y lazygit
-fi
-
-if ! [ -x "$(command -v psql)" ]; then
-  sudo apt-get update
-  sudo apt install -q -y postgresql postgresql-contrib
-fi
-
-if ! [ -x "$(command -v mysql)" ]; then
-  sudo apt-get update
-  sudo apt install -q -y mariadb-server
+  sudo dnf copr enable atim/lazygit -y
+  sudo dnf install -y lazygit
 fi
 
 if ! [ -x "$(command -v aws)" ]; then
@@ -80,8 +56,8 @@ if ! [ -x "$(command -v aws)" ]; then
 fi
 
 if ! [ -d "${HOME}/.ebcli-virtual-env" ]; then
+  git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git /tmp
   cd /tmp
-  git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
   python3 install virtualenv
   python3 ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
 fi
@@ -96,7 +72,7 @@ if [ ! -d "${HOME}/.rbenv/plugins" ]; then
 fi
 
 ## Nvm
-if ! [ -x "$(command -v node)" ]; then
+if [ ! -d "${HOME}/.nvm" ]; then
   echo "==> Setting NVM and NODE"
   export NVM_DIR="$HOME/.nvm" && (
   git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
@@ -152,12 +128,13 @@ if [ ! -d "${HOME}/.ssh" ]; then
   mkdir -p "${HOME}/.ssh"
   cp /root/.ssh/authorized_keys "${HOME}/.ssh/"
 fi
-sudo chown -R dev:admin /mnt/blockstorage
+sudo chown -R dev:wheel /mnt/blockstorage
 
 # Docker
 if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   echo 'dev ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
 
+  sudo groupadd -f docker
   sudo usermod -aG docker dev
   sudo systemctl enable --now docker.service
 
@@ -165,8 +142,6 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
 
   sudo systemctl restart fail2ban.service
-  sudo systemctl stop mysql.service
-  sudo systemctl stop postgresql.service
 fi
 
 echo "=> Done!"
