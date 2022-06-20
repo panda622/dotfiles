@@ -22,6 +22,7 @@ fi
 sudo dnf install -y \
   util-linux-user \
   readline-devel \
+  gcc-c++ \
   git-core \
   curl \
   docker  \
