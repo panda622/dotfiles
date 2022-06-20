@@ -21,6 +21,7 @@ fi
 
 sudo dnf install -y \
   util-linux-user \
+  readline-devel \
   git-core \
   curl \
   docker  \
