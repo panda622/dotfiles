@@ -43,6 +43,7 @@ sudo dnf install -y \
   fail2ban \
   fzf \
   unzip \
+  bzip2 \
   xclip \
 # sudo rm -rf /var/lib/apt/lists/*
 sudo yum groupinstall "Development Tools" -y
