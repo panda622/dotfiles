@@ -24,6 +24,9 @@ sudo dnf install -y \
   readline-devel \
   mysql-devel \
   mariadb-server \
+  postgresql-server \
+  postgresql-contrib \
+  postgresql-devel \
   gcc-c++ \
   git-core \
   curl \
