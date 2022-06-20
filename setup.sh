@@ -22,6 +22,8 @@ fi
 sudo dnf install -y \
   util-linux-user \
   readline-devel \
+  mysql-devel \
+  mariadb-server \
   gcc-c++ \
   git-core \
   curl \
