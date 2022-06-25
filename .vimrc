@@ -86,22 +86,6 @@ let g:gutentags_generate_on_empty_buffer = 0
 " Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden', <bang>0)
 
-" Tagbar
-let g:tagbar_width = 60
-let g:tagbar_type_typescript = {
-      \ 'ctagstype': 'typescript',
-      \ 'kinds': [
-      \ 'c:classes',
-      \ 'n:modules',
-      \ 'f:functions',
-      \ 'v:variables',
-      \ 'v:varlambdas',
-      \ 'm:members',
-      \ 'i:interfaces',
-      \ 'e:enums',
-      \ ]
-      \ }
-
 
 " NNN
 let g:nnn#set_default_mappings = 0

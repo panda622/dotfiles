@@ -39,3 +39,6 @@ alias plisten="sudo lsof -i -P -n | grep LISTEN"
 alias activenet='sudo route add -net 10.91.9.0/24 gw 10.91.16.65 & sudo route add -net 172.29.0.0/16 gw 10.91.16.65 & sudo route add -net 192.168.0.0/16 gw 10.91.16.65 & sudo route add -net 192.168.155.0/24 gw 10.91.16.65'
 alias vpn='cd /home/cimb/programs/anyconnect-linux64-4.9.01095/vpn && sudo ./vpnui &'
 alias lzd='lazydocker'
+
+alias cid="doctl compute droplet list | grep cloud | awk \"{print $3}\""
+
