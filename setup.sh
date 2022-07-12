@@ -20,6 +20,7 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
 fi
 
 sudo dnf install -y \
+  lsof \
   util-linux-user \
   readline-devel \
   mysql-devel \
@@ -51,8 +52,8 @@ sudo dnf install -y \
   fzf \
   unzip \
   bzip2 \
-  xclip \
-# sudo rm -rf /var/lib/apt/lists/*
+  xclip
+
 sudo yum groupinstall "Development Tools" -y
 
 if ! [ -x "$(command -v lazygit)" ]; then
@@ -64,11 +65,8 @@ if ! [ -x "$(command -v aws)" ]; then
    python3 -m pip install awscli
 fi
 
-if ! [ -d "${HOME}/.ebcli-virtual-env" ]; then
-  git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git /tmp
-  cd /tmp
-  python3 install virtualenv
-  python3 ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
+if ! [ -x "$(command -v eb)" ]; then
+   python3 -m pip install awsebcli
 fi
 
 ## Rbenv
