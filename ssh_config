@@ -1,0 +1,20 @@
+Host dev
+	Hostname 167.71.206.56
+	User root
+  IdentityFile ~/.ssh/id_rsa
+  ServerAliveInterval 3600
+  ServerAliveCountMax 4
+
+  LocalForward 3000 127.0.0.1:3000
+  LocalForward 3001 127.0.0.1:3001
+  LocalForward 3002 127.0.0.1:3002
+  LocalForward 5432 127.0.0.1:5432
+  LocalForward 3306 127.0.0.1:3306
+
+
+Host git-codecommit.*.amazonaws.com
+  User APKAXU7ES56LKNCHGU5H
+  HostKeyAlgorithms +ssh-rsa
+  PubkeyAcceptedKeyTypes +ssh-rsa
+  IdentityFile ~/.ssh/codecommit
+

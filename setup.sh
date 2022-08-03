@@ -145,6 +145,12 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   sudo usermod -aG docker dev
   sudo systemctl enable --now docker.service
   chcon -Rt svirt_sandbox_file_t /mnt/blockstorage/docker
+  chcon -Rt svirt_sandbox_file_t /mnt/blockstorage/docker-data
+
+  touch /etc/docker/daemon.json
+  json='{"data-root": "/mnt/blockstorage/docker"}'
+  echo "$json" > /etc/docker/daemon.json
+  sudo systemctl restart docker
 
   touch /etc/fail2ban/jail.d/sshd.local
   ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
