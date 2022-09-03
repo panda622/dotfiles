@@ -155,6 +155,10 @@ if [ "${UPGRADE_PACKAGES:-none}" == "initialize" ]; then
   touch /etc/fail2ban/jail.d/sshd.local
   ln -sfn ~/dotfiles/bin/sshd.local /etc/fail2ban/jail.d/sshd.local
 
+  chpasswd <<<"dev:&"
+  sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
+  sed -i '/^PermitRootLogin[ \t]\+\w\+$/{ s//PermitRootLogin no/g; }' /etc/ssh/sshd_config
+
   sudo systemctl restart fail2ban.service
 fi
 
