@@ -23,8 +23,8 @@ source ~/dotfiles/alias.sh
 
 alias grep='grep --exclude-dir="dist" --exclude-dir="node_modules" --color'
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+export PATH="/mnt/blockstorage/user/.rbenv/bin:$PATH"
+export PATH="/mnt/blockstorage/user/.rbenv/plugins/ruby-build/bin:$PATH"
 eval "$(rbenv init -)"
 source "${HOME}/dotfiles/bin/key-bindings.zsh"
 source "${HOME}/dotfiles/bin/completion.zsh"
