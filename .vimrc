@@ -12,7 +12,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-fugitive'
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/0.x'
@@ -22,24 +22,29 @@ call plug#begin('~/.vim/plugged')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'
   Plug 'morhetz/gruvbox'
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
 
 filetype plugin indent on
 " set number
 set wildmenu wildmode=longest:full,full
 set list listchars=tab:»\ ,trail:•
-set autoindent expandtab smarttab
-set shiftwidth=2 softtabstop=2 tabstop=2
+set autoindent
+set tabstop=2       " Number of spaces that a <Tab> in the file counts for
+set shiftwidth=2    " Number of spaces to use for each step of (auto)indent
+set expandtab       " Use spaces instead of tabs
+set softtabstop=2   " Number of spaces that a <Tab> counts for while editing
 set hlsearch ignorecase incsearch
 set nobackup noswapfile nowritebackup hidden
 set undofile undolevels=5000 undodir=$HOME/.VIM_UNDO_FILES
-syntax off
+syntax on
 set t_Co=256
-colors gruvbox
+colors catppuccin-mocha
+set background=dark
 
 " Filetype
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-autocmd FileType typescript setlocal shiftwidth=4 softtabstop=4 tabstop=4 noexpandtab
+autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 
 let mapleader = " "
 nmap <Leader>s *:%s/<C-R><C-W>/
@@ -75,6 +80,8 @@ vnoremap H ^
 vnoremap L g_
 " Act like D and C
 nnoremap Y y$
+
+set mouse=
 
 " Gutentags
 let g:gutentags_cache_dir = expand('~/.ctags_cache_dir')
